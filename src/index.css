@@ -1,0 +1,222 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@layer base {
+  :root {
+    /* Public Theme - Luxury Gallery */
+    --background: 0 0% 100%;
+    --foreground: 240 10% 10%;
+    
+    --card: 0 0% 100%;
+    --card-foreground: 240 10% 10%;
+    
+    --popover: 0 0% 100%;
+    --popover-foreground: 240 10% 10%;
+    
+    --primary: 43 74% 52%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 240 5% 96%;
+    --secondary-foreground: 240 10% 10%;
+    
+    --muted: 240 5% 96%;
+    --muted-foreground: 240 5% 46%;
+    
+    --accent: 43 74% 52%;
+    --accent-foreground: 0 0% 100%;
+    
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    
+    --border: 240 6% 90%;
+    --input: 240 6% 90%;
+    --ring: 43 74% 52%;
+    
+    --radius: 0.75rem;
+    
+    /* Luxury Colors */
+    --gold: 43 74% 52%;
+    --gold-light: 43 74% 62%;
+    --charcoal: 240 10% 10%;
+    --gallery: 0 0% 98%;
+    
+    /* Sidebar */
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5% 26%;
+    --sidebar-primary: 43 74% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 5% 96%;
+    --sidebar-accent-foreground: 240 6% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 43 74% 52%;
+  }
+
+  .dark {
+    /* Dealer Portal Theme - Command Center */
+    --background: 0 0% 6%;
+    --foreground: 0 0% 95%;
+    
+    --card: 240 6% 10%;
+    --card-foreground: 0 0% 95%;
+    
+    --popover: 240 6% 10%;
+    --popover-foreground: 0 0% 95%;
+    
+    --primary: 43 74% 52%;
+    --primary-foreground: 0 0% 100%;
+    
+    --secondary: 240 4% 16%;
+    --secondary-foreground: 0 0% 95%;
+    
+    --muted: 240 4% 16%;
+    --muted-foreground: 240 5% 65%;
+    
+    --accent: 240 4% 16%;
+    --accent-foreground: 0 0% 95%;
+    
+    --destructive: 0 63% 31%;
+    --destructive-foreground: 0 0% 95%;
+    
+    --border: 240 4% 16%;
+    --input: 240 4% 16%;
+    --ring: 43 74% 52%;
+    
+    /* Data Visualization Colors */
+    --viz-emerald: 152 76% 47%;
+    --viz-rose: 350 89% 60%;
+    --viz-amber: 38 92% 50%;
+    --viz-blue: 217 91% 60%;
+    
+    /* Glassmorphism */
+    --glass-bg: 240 6% 10% / 0.8;
+    --glass-border: 240 6% 20%;
+    
+    /* Sidebar Dark */
+    --sidebar-background: 0 0% 6%;
+    --sidebar-foreground: 0 0% 85%;
+    --sidebar-primary: 43 74% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 4% 16%;
+    --sidebar-accent-foreground: 0 0% 95%;
+    --sidebar-border: 240 4% 16%;
+    --sidebar-ring: 43 74% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply bg-background text-foreground font-sans antialiased;
+  }
+  
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display;
+  }
+}
+
+@layer utilities {
+  /* Glassmorphism */
+  .glass {
+    @apply bg-card/80 backdrop-blur-xl border border-white/10;
+  }
+  
+  .glass-dark {
+    @apply bg-card/60 backdrop-blur-2xl border border-white/5;
+  }
+  
+  /* Gold gradient text */
+  .text-gold-gradient {
+    @apply bg-gradient-to-r from-[hsl(43,74%,52%)] via-[hsl(43,74%,62%)] to-[hsl(43,74%,52%)] bg-clip-text text-transparent;
+  }
+  
+  /* Luxury card hover */
+  .luxury-card {
+    @apply transition-all duration-500 ease-out hover:shadow-2xl hover:-translate-y-1;
+  }
+  
+  /* Glow effects */
+  .glow-gold {
+    box-shadow: 0 0 40px hsl(43 74% 52% / 0.15);
+  }
+  
+  .glow-emerald {
+    box-shadow: 0 0 30px hsl(152 76% 47% / 0.2);
+  }
+  
+  .glow-rose {
+    box-shadow: 0 0 30px hsl(350 89% 60% / 0.2);
+  }
+  
+  /* Animated gradient border */
+  .gradient-border {
+    position: relative;
+  }
+  
+  .gradient-border::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(135deg, hsl(43 74% 52%), transparent, hsl(43 74% 52%));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+  }
+  
+  /* Smooth scrollbar */
+  .scrollbar-luxury::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  .scrollbar-luxury::-webkit-scrollbar-track {
+    @apply bg-muted/30 rounded-full;
+  }
+  
+  .scrollbar-luxury::-webkit-scrollbar-thumb {
+    @apply bg-primary/40 rounded-full hover:bg-primary/60;
+  }
+  
+  /* Animation utilities */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-slow {
+    animation: pulse 3s ease-in-out infinite;
+  }
+  
+  .animate-shimmer {
+    animation: shimmer 2s linear infinite;
+    background-size: 200% 100%;
+  }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes shimmer {
+  0% { background-position: 200% 0; }
+  100% { background-position: -200% 0; }
+}
+
+/* Chart customizations */
+.recharts-cartesian-grid-horizontal line,
+.recharts-cartesian-grid-vertical line {
+  stroke: hsl(var(--border));
+  stroke-opacity: 0.5;
+}
+
+.recharts-text {
+  fill: hsl(var(--muted-foreground));
+  font-family: 'Inter', sans-serif;
+}
