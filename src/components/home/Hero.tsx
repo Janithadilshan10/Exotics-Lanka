@@ -1,18 +1,55 @@
 import { Button } from "@/components/ui/button";
 import { Search, ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useTheme } from "next-themes";
+import { useEffect, useState } from "react";
 
 export function Hero() {
+  const { theme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // Dark mode image - Porsche at night
+  const darkImage = "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070&auto=format&fit=crop";
+  
+  // Light mode image - White/Silver Porsche in bright elegant setting
+  const lightImage = "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2070&auto=format&fit=crop";
+
+  const currentTheme = mounted ? theme : "dark";
+  const isDark = currentTheme === "dark";
+
   return (
     <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-background via-background to-muted">
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,_var(--tw-gradient-stops))] from-primary/5 via-transparent to-transparent" />
+      {/* Theme-aware Background Image */}
+      <div className="absolute inset-0">
+        <img 
+          src={isDark ? darkImage : lightImage}
+          alt="Luxury Vehicle"
+          className="w-full h-full object-cover object-center transition-opacity duration-500"
+        />
+        {/* Theme-aware overlay for readability */}
+        {isDark ? (
+          <>
+            {/* Dark mode overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/10 via-transparent to-primary/5" />
+          </>
+        ) : (
+          <>
+            {/* Light mode overlay - warm champagne/cream tint matching theme */}
+            <div className="absolute inset-0 bg-[hsl(40,25%,96%)]/90" />
+            <div className="absolute inset-0 bg-gradient-to-b from-[hsl(40,25%,96%)]/95 via-[hsl(40,25%,96%)]/85 to-[hsl(40,25%,96%)]/90" />
+            <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-transparent to-primary/6" />
+          </>
+        )}
       </div>
 
       {/* Floating Elements */}
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/5 rounded-full blur-3xl animate-pulse-slow" />
-      <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-primary/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: "1s" }} />
+      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-slow" />
+      <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-primary/15 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: "1s" }} />
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">

@@ -3,16 +3,19 @@ import { Footer } from "@/components/layout/Footer";
 import { Hero } from "@/components/home/Hero";
 import { TrendingCarousel } from "@/components/home/TrendingCarousel";
 import { BrandShowcase } from "@/components/home/BrandShowcase";
+import { PageTransition } from "@/components/PageTransition";
 
 const Index = () => {
   return (
     <div className="min-h-screen">
       <Navbar />
-      <main>
-        <Hero />
-        <TrendingCarousel />
-        <BrandShowcase />
-      </main>
+      <PageTransition>
+        <main id="main-content">
+          <Hero />
+          <TrendingCarousel />
+          <BrandShowcase />
+        </main>
+      </PageTransition>
       <Footer />
     </div>
   );

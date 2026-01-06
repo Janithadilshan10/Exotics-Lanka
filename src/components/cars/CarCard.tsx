@@ -1,6 +1,9 @@
-import { Heart, MapPin, Gauge, Fuel, Calendar } from "lucide-react";
+import { Heart, MapPin, Gauge, Fuel, Calendar, GitCompare } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { Link } from "react-router-dom";
+import { useComparison } from "@/contexts/ComparisonContext";
 
 interface Car {
   id: string;
@@ -28,6 +31,9 @@ interface CarCardProps {
 }
 
 export function CarCard({ car, showHealthScore = false }: CarCardProps) {
+  const { addToComparison, removeFromComparison, isInComparison, maxComparisonReached } = useComparison();
+  const inComparison = isInComparison(car.id);
+
   const formatPrice = (price: number) => {
     return `LKR ${(price / 1000000).toFixed(1)}M`;
   };
@@ -42,10 +48,21 @@ export function CarCard({ car, showHealthScore = false }: CarCardProps) {
     return "text-rose-500 bg-rose-500/10";
   };
 
+  const handleCompareClick = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    if (inComparison) {
+      removeFromComparison(car.id);
+    } else {
+      addToComparison(car);
+    }
+  };
+
   return (
     <div className="group relative bg-card rounded-2xl overflow-hidden border border-border luxury-card">
-      {/* Image Container */}
-      <div className="relative aspect-[4/3] overflow-hidden">
+        {/* Image Container */}
+        <div className="relative aspect-[4/3] overflow-hidden">
         <img
           src={car.image}
           alt={car.title}
@@ -66,7 +83,14 @@ export function CarCard({ car, showHealthScore = false }: CarCardProps) {
         </div>
 
         {/* Favorite Button */}
-        <button className="absolute top-4 right-4 p-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-colors">
+        <button 
+          className="absolute top-4 right-4 p-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-colors z-10"
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            // Handle favorite logic here
+          }}
+        >
           <Heart className="h-5 w-5" />
         </button>
 
@@ -120,7 +144,22 @@ export function CarCard({ car, showHealthScore = false }: CarCardProps) {
             <p className="text-xs text-rose-500 font-medium">⚠️ {car.priceAlert}</p>
           </div>
         )}
+
+        {/* Compare Button */}
+        <Button
+          variant={inComparison ? "default" : "outline"}
+          size="sm"
+          className="w-full mt-4 relative z-10"
+          onClick={handleCompareClick}
+          disabled={!inComparison && maxComparisonReached}
+        >
+          <GitCompare className="h-4 w-4 mr-2" />
+          {inComparison ? "Remove from Compare" : "Add to Compare"}
+        </Button>
       </div>
+
+      {/* Clickable overlay for navigation */}
+      <Link to={`/car/${car.id}`} className="absolute inset-0 z-[1]" aria-label={`View details for ${car.title}`} />
     </div>
   );
 }
