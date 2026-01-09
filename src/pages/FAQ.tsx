@@ -3,6 +3,8 @@ import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
 import {
   Accordion,
   AccordionContent,
@@ -155,8 +157,14 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="FAQ - Frequently Asked Questions"
+        description="Find answers to common questions about buying and selling luxury cars on Exotics Lanka."
+        keywords="faq, frequently asked questions, help, support"
+      />
       <Navbar />
-      <main className="pt-20">
+      <PageTransition>
+        <main id="main-content" className="pt-20">
         {/* Hero */}
         <section className="py-16 bg-gradient-to-br from-background via-muted/30 to-background">
           <div className="container mx-auto px-4">
@@ -269,6 +277,7 @@ const FAQ = () => {
           </div>
         </section>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

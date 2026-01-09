@@ -60,36 +60,48 @@ export function CarCard({ car, showHealthScore = false }: CarCardProps) {
   };
 
   return (
-    <div className="group relative bg-card rounded-2xl overflow-hidden border border-border luxury-card">
-        {/* Image Container */}
-        <div className="relative aspect-[4/3] overflow-hidden">
+    <div className="group relative glass-card rounded-3xl overflow-hidden card-lift shadow-lg">
+        {/* Image Container - Larger for Premium Feel */}
+        <div className="relative aspect-[5/3] overflow-hidden image-overlay-luxury">
         <img
           src={car.image}
           alt={car.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+          className="w-full h-full object-cover parallax-slow"
         />
         
-        {/* Gradient Overlay */}
-        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent" />
+        {/* Premium Gradient Overlay - handled by image-overlay-luxury class */}
         
         {/* Badges */}
-        <div className="absolute top-4 left-4 flex gap-2">
+        <div className="absolute top-6 left-6 flex flex-col gap-2 z-10">
+          {/* Verified Badge - Always Show */}
+          <Badge className="bg-primary/90 backdrop-blur-sm text-primary-foreground font-sans-luxury font-semibold tracking-wide text-xs px-3 py-1 shadow-lg animate-scale-in">
+            <svg className="w-3 h-3 mr-1.5" fill="currentColor" viewBox="0 0 20 20">
+              <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+            </svg>
+            VERIFIED
+          </Badge>
+          
           {car.isNew && (
-            <Badge className="bg-primary text-primary-foreground">New</Badge>
+            <Badge className="bg-white/10 backdrop-blur-sm text-white border border-white/20 font-sans-luxury font-semibold tracking-wide text-xs px-3 py-1 animate-scale-in" style={{ animationDelay: '0.1s' }}>
+              NEW
+            </Badge>
           )}
           {car.trending && (
-            <Badge className="bg-emerald-500 text-white">Trending</Badge>
+            <Badge className="bg-emerald-500/90 backdrop-blur-sm text-white font-sans-luxury font-semibold tracking-wide text-xs px-3 py-1 glow-emerald animate-scale-in" style={{ animationDelay: '0.2s' }}>
+              TRENDING
+            </Badge>
           )}
         </div>
 
         {/* Favorite Button */}
         <button 
-          className="absolute top-4 right-4 p-2 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 text-white hover:bg-white/20 transition-colors z-10"
+          className="absolute top-6 right-6 p-3 rounded-full glass backdrop-blur-xl text-white hover:bg-primary/20 hover:text-primary transition-all duration-300 z-10 magnetic-button shadow-lg"
           onClick={(e) => {
             e.preventDefault();
             e.stopPropagation();
             // Handle favorite logic here
           }}
+          aria-label="Add to favorites"
         >
           <Heart className="h-5 w-5" />
         </button>
@@ -104,58 +116,63 @@ export function CarCard({ car, showHealthScore = false }: CarCardProps) {
           </div>
         )}
 
-        {/* Price */}
-        <div className="absolute bottom-4 left-4">
-          <p className="text-white font-display text-2xl font-bold">
+        {/* Price - Prominent Display */}
+        <div className="absolute bottom-6 left-6 z-10">
+          <p className="text-white font-display text-4xl md:text-5xl font-light tracking-wider text-gold-gradient drop-shadow-2xl">
             {formatPrice(car.price)}
           </p>
         </div>
       </div>
 
-      {/* Content */}
-      <div className="p-5">
-        <h3 className="font-display text-lg font-semibold mb-3 line-clamp-1 group-hover:text-primary transition-colors">
-          {car.title}
-        </h3>
+      {/* Content - Ultra Minimal, Everything Hidden Until Hover */}
+      <div className="p-8">
+        {/* Main Info - Brand Always Visible, Rest on Hover */}
+        <div className="mb-4">
+          <h3 className="font-sans-luxury text-2xl font-light tracking-wide line-clamp-1 group-hover:text-primary transition-colors duration-300">
+            {car.brand}
+          </h3>
+          {/* Year & Transmission - Hidden by Default */}
+          <p className="font-luxury text-lg text-muted-foreground mt-1 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-300 overflow-hidden">
+            {car.year} • {car.transmission}
+          </p>
+        </div>
 
-        {/* Specs Grid */}
-        <div className="grid grid-cols-2 gap-3 text-sm text-muted-foreground">
-          <div className="flex items-center gap-2">
-            <Calendar className="h-4 w-4" />
-            <span>{car.year}</span>
+        {/* Specs Grid - Hidden by Default, Show on Hover */}
+        <div className="h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-500 overflow-hidden space-y-3 text-sm text-muted-foreground font-sans-luxury">
+          <div className="flex items-center gap-2.5 pt-2">
+            <Gauge className="h-4 w-4 text-primary" />
+            <span className="tracking-wide">{formatMileage(car.mileage)} kilometers</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Gauge className="h-4 w-4" />
-            <span>{formatMileage(car.mileage)}</span>
+          <div className="flex items-center gap-2.5">
+            <Fuel className="h-4 w-4 text-primary" />
+            <span className="tracking-wide">{car.fuelType}</span>
           </div>
-          <div className="flex items-center gap-2">
-            <Fuel className="h-4 w-4" />
-            <span>{car.fuelType}</span>
-          </div>
-          <div className="flex items-center gap-2">
-            <MapPin className="h-4 w-4" />
-            <span className="truncate">{car.location}</span>
+          <div className="flex items-center gap-2.5">
+            <MapPin className="h-4 w-4 text-primary" />
+            <span className="truncate tracking-wide">{car.location}</span>
           </div>
         </div>
 
-        {/* Price Alert */}
+        {/* Price Alert - Show on Hover */}
         {car.priceAlert && (
-          <div className="mt-4 p-3 rounded-lg bg-rose-500/10 border border-rose-500/20">
+          <div className="mt-4 p-3 rounded-lg bg-rose-500/10 border border-rose-500/20 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 transition-all duration-300 overflow-hidden">
             <p className="text-xs text-rose-500 font-medium">⚠️ {car.priceAlert}</p>
           </div>
         )}
 
-        {/* Compare Button */}
-        <Button
-          variant={inComparison ? "default" : "outline"}
-          size="sm"
-          className="w-full mt-4 relative z-10"
-          onClick={handleCompareClick}
-          disabled={!inComparison && maxComparisonReached}
-        >
-          <GitCompare className="h-4 w-4 mr-2" />
-          {inComparison ? "Remove from Compare" : "Add to Compare"}
-        </Button>
+        {/* Compare Button - Hidden by Default, Show on Hover */}
+        <div className="mt-0 h-0 opacity-0 group-hover:h-auto group-hover:opacity-100 group-hover:mt-6 transition-all duration-500 overflow-hidden">
+          <Button
+            variant={inComparison ? "default" : "outline"}
+            size="sm"
+            className="w-full relative z-10 magnetic-button font-sans-luxury tracking-wide border-primary/30 hover:border-primary hover:shadow-hover-gold"
+            onClick={handleCompareClick}
+            disabled={!inComparison && maxComparisonReached}
+          >
+            <GitCompare className="h-4 w-4 mr-2" />
+            {inComparison ? "Remove" : "Compare"}
+          </Button>
+        </div>
       </div>
 
       {/* Clickable overlay for navigation */}

@@ -5,6 +5,9 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Link, useNavigate } from "react-router-dom";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
+import { NoComparisonItems } from "@/components/ui/empty-state";
 import {
   ArrowLeft,
   X,
@@ -197,8 +200,14 @@ const Compare = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Compare Cars - Side-by-Side Comparison"
+        description="Compare luxury and exotic vehicles side-by-side. Find the perfect car by comparing specs, features, and prices."
+        keywords="compare cars, car comparison, compare vehicles, side by side"
+      />
       <Navbar />
-      <main className="pt-20 pb-20">
+      <PageTransition>
+        <main id="main-content" className="pt-20 pb-20">
         {/* Header */}
         <section className="py-12 bg-gradient-to-br from-background via-muted/30 to-background border-b border-border">
           <div className="container mx-auto px-4">
@@ -427,6 +436,7 @@ const Compare = () => {
           </div>
         </section>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

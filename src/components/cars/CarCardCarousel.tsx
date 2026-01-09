@@ -108,3 +108,5 @@ export function CarCardCarousel({ images, alt }: CarCardCarouselProps) {
   );
 }
 
+
+

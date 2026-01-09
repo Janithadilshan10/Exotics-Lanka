@@ -3,6 +3,8 @@ import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
 import {
   Search,
   UserPlus,
@@ -183,8 +185,14 @@ const HowItWorks = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="How It Works - Buy & Sell Guide"
+        description="Learn how to buy and sell luxury cars on Exotics Lanka. Simple steps to list, browse, and connect."
+        keywords="how it works, user guide, buying guide, selling guide"
+      />
       <Navbar />
-      <main className="pt-20">
+      <PageTransition>
+        <main id="main-content" className="pt-20">
         {/* Hero */}
         <section className="py-16 bg-gradient-to-br from-background via-muted/30 to-background">
           <div className="container mx-auto px-4 text-center">
@@ -382,6 +390,7 @@ const HowItWorks = () => {
           </div>
         </section>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

@@ -6,6 +6,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { PageTransition } from "@/components/PageTransition";
+import { DashboardStatSkeleton, CarCardSkeleton } from "@/components/ui/skeleton";
+import { NoListings } from "@/components/ui/empty-state";
+import { SEO } from "@/components/SEO";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -50,6 +54,7 @@ const Dashboard = () => {
   const [listings, setListings] = useState<Listing[]>([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [activeTab, setActiveTab] = useState("all");
+  const [loading, setLoading] = useState(false); // Set to true when fetching
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -123,8 +128,14 @@ const Dashboard = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Dashboard - Manage Your Listings"
+        description="Manage your luxury car listings, track views, and monitor performance on Exotics Lanka."
+        keywords="seller dashboard, manage listings, car dealer dashboard"
+      />
       <Navbar />
-      <main className="pt-20 pb-12">
+      <PageTransition>
+        <main id="main-content" className="pt-20 pb-12">
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="mb-8">
@@ -137,45 +148,53 @@ const Dashboard = () => {
           </div>
 
           {/* Stats Grid */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-            <div className="bg-card rounded-xl p-6 border border-border">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-sm text-muted-foreground">Total Listings</p>
-                <Car className="h-5 w-5 text-primary" />
-              </div>
-              <p className="font-display text-3xl font-bold">{stats.total}</p>
+          {loading ? (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              {[1, 2, 3, 4].map(i => (
+                <DashboardStatSkeleton key={i} />
+              ))}
             </div>
+          ) : (
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+              <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm text-muted-foreground">Total Listings</p>
+                  <Car className="h-5 w-5 text-primary" />
+                </div>
+                <p className="font-display text-3xl font-bold">{stats.total}</p>
+              </div>
 
-            <div className="bg-card rounded-xl p-6 border border-border">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-sm text-muted-foreground">Active</p>
-                <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+              <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm text-muted-foreground">Active</p>
+                  <CheckCircle2 className="h-5 w-5 text-emerald-500" />
+                </div>
+                <p className="font-display text-3xl font-bold text-emerald-500">
+                  {stats.active}
+                </p>
               </div>
-              <p className="font-display text-3xl font-bold text-emerald-500">
-                {stats.active}
-              </p>
-            </div>
 
-            <div className="bg-card rounded-xl p-6 border border-border">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-sm text-muted-foreground">Total Views</p>
-                <Eye className="h-5 w-5 text-primary" />
+              <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm text-muted-foreground">Total Views</p>
+                  <Eye className="h-5 w-5 text-primary" />
+                </div>
+                <p className="font-display text-3xl font-bold">
+                  {stats.totalViews}
+                </p>
               </div>
-              <p className="font-display text-3xl font-bold">
-                {stats.totalViews}
-              </p>
-            </div>
 
-            <div className="bg-card rounded-xl p-6 border border-border">
-              <div className="flex items-center justify-between mb-2">
-                <p className="text-sm text-muted-foreground">Favorites</p>
-                <Heart className="h-5 w-5 text-rose-500" />
+              <div className="bg-card rounded-xl p-6 border border-border">
+                <div className="flex items-center justify-between mb-2">
+                  <p className="text-sm text-muted-foreground">Favorites</p>
+                  <Heart className="h-5 w-5 text-rose-500" />
+                </div>
+                <p className="font-display text-3xl font-bold text-rose-500">
+                  {stats.totalFavorites}
+                </p>
               </div>
-              <p className="font-display text-3xl font-bold text-rose-500">
-                {stats.totalFavorites}
-              </p>
             </div>
-          </div>
+          )}
 
           {/* Actions Bar */}
           <div className="flex flex-col md:flex-row gap-4 mb-6">
@@ -219,12 +238,19 @@ const Dashboard = () => {
           </Tabs>
 
           {/* Listings Grid */}
-          {filteredListings.length > 0 ? (
+          {loading ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredListings.map((listing) => (
+              {[1, 2, 3].map(i => (
+                <CarCardSkeleton key={i} />
+              ))}
+            </div>
+          ) : filteredListings.length > 0 ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {filteredListings.map((listing, index) => (
                 <div
                   key={listing.id}
-                  className="bg-card rounded-xl overflow-hidden border border-border group"
+                  className="bg-card rounded-xl overflow-hidden border border-border group animate-fade-in"
+                  style={{ animationDelay: `${index * 0.05}s` }}
                 >
                   {/* Image */}
                   <div className="relative aspect-video">
@@ -344,28 +370,14 @@ const Dashboard = () => {
             </div>
           ) : (
             /* Empty State */
-            <div className="text-center py-20">
-              <Car className="h-16 w-16 mx-auto mb-4 text-muted-foreground" />
-              <h3 className="font-display text-2xl font-semibold mb-2">
-                No listings found
-              </h3>
-              <p className="text-muted-foreground mb-6">
-                {searchQuery
-                  ? "Try adjusting your search"
-                  : "Create your first listing to get started"}
-              </p>
-              {!searchQuery && (
-                <Link to="/listing/create">
-                  <Button variant="gold" className="gap-2">
-                    <Plus className="h-5 w-5" />
-                    Create Your First Listing
-                  </Button>
-                </Link>
-              )}
-            </div>
+            <NoListings 
+              searchActive={!!searchQuery}
+              onCreateListing={() => navigate("/listing/create")}
+            />
           )}
         </div>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

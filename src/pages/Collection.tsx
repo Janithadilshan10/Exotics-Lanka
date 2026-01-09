@@ -11,6 +11,7 @@ import { Badge } from "@/components/ui/badge";
 import { PageTransition } from "@/components/PageTransition";
 import { CarCardSkeleton } from "@/components/ui/skeleton";
 import { NoSearchResults } from "@/components/ui/empty-state";
+import { SEO } from "@/components/SEO";
 import {
   Select,
   SelectContent,
@@ -61,6 +62,7 @@ const Collection = () => {
   const [searchSuggestions, setSearchSuggestions] = useState<string[]>([]);
   const [showSuggestions, setShowSuggestions] = useState(false);
   const [isSaveSearchOpen, setIsSaveSearchOpen] = useState(false);
+  const [loading, setLoading] = useState(false); // Set to true when fetching data
 
   // Save filters to localStorage whenever they change
   useEffect(() => {
@@ -484,35 +486,101 @@ const Collection = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Collection - Browse Luxury Cars"
+        description="Browse our curated collection of exotic and luxury vehicles. Filter by brand, price, year, and more to find your perfect car."
+        keywords="luxury car collection, exotic cars sri lanka, premium vehicles, buy luxury cars"
+      />
       <Navbar />
       <PageTransition>
         <main id="main-content" className="pt-20">
-        {/* Header */}
-        <section className="py-12 bg-gradient-to-br from-background via-muted/30 to-background border-b border-border">
-          <div className="container mx-auto px-4">
-            <h1 className="font-display text-4xl md:text-5xl font-bold mb-4">
-              The Collection
-            </h1>
-            <p className="text-muted-foreground text-lg max-w-xl">
-              Explore our curated selection of exceptional vehicles, each one inspected and verified.
-            </p>
+        {/* Hero Section - Luxury Upgrade */}
+        <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
+          {/* Background Image/Video */}
+          <div className="absolute inset-0">
+            <img
+              src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&h=1080&fit=crop"
+              alt="Luxury Cars"
+              className="w-full h-full object-cover animate-ken-burns"
+            />
+            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
+          </div>
+          
+          {/* Content */}
+          <div className="relative h-full flex items-center">
+            <div className="container mx-auto px-6 md:px-12 max-w-[1400px]">
+              <div className="max-w-2xl space-y-6">
+                <h1 className="font-display text-5xl md:text-7xl font-light text-white tracking-wide">
+                  The Collection
+                </h1>
+                <p className="font-luxury text-xl md:text-2xl text-white/90 leading-relaxed">
+                  Curated excellence. Verified luxury. Your dream car awaits.
+                </p>
+                <div className="flex flex-wrap gap-3 mt-8">
+                  <Badge className="px-4 py-2 text-sm font-sans-luxury bg-primary/90 backdrop-blur-sm">
+                    {featuredCars.length}+ Premium Vehicles
+                  </Badge>
+                  <Badge className="px-4 py-2 text-sm font-sans-luxury bg-white/10 backdrop-blur-sm text-white border-white/20">
+                    100% Verified Sellers
+                  </Badge>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
 
         {/* Main Content */}
-        <section className="py-8">
-          <div className="container mx-auto px-4">
-            <div className="flex gap-8">
-              {/* Desktop Filters Sidebar */}
+        <section className="py-12">
+          <div className="container mx-auto px-6 md:px-12 max-w-[1400px]">
+            <div className="flex gap-12">
+              {/* Desktop Filters Sidebar - Sticky */}
               <aside className="hidden lg:block w-80 shrink-0">
-                <div className="sticky top-24">
-                  <div className="bg-card rounded-2xl border border-border p-6">
-                    <div className="flex items-center justify-between mb-6">
-                      <h2 className="font-display text-xl font-semibold">Filters</h2>
+                <div className="sticky top-28">
+                  <div className="glass-card rounded-2xl p-8 space-y-8">
+                    <div className="flex items-center justify-between">
+                      <h2 className="font-sans-luxury text-xl font-light tracking-wide">Filters</h2>
                       {activeFilterCount > 0 && (
-                        <Badge variant="secondary">{activeFilterCount}</Badge>
+                        <Badge variant="secondary" className="font-sans-luxury">{activeFilterCount}</Badge>
                       )}
                     </div>
+                    
+                    {/* Quick Filters */}
+                    <div className="space-y-3">
+                      <h3 className="font-sans-luxury text-sm text-muted-foreground tracking-wide uppercase">Quick Filters</h3>
+                      <div className="flex flex-col gap-2">
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="justify-start font-sans-luxury tracking-wide hover:bg-primary/10 hover:text-primary hover:border-primary"
+                          onClick={() => {
+                            // Filter: New Arrivals (last 7 days)
+                            setSortBy("newest");
+                          }}
+                        >
+                          ✨ New Arrivals
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="justify-start font-sans-luxury tracking-wide hover:bg-primary/10 hover:text-primary hover:border-primary"
+                          onClick={() => {
+                            setFilters(f => ({ ...f, priceRange: [0, 10] }));
+                          }}
+                        >
+                          💎 Under LKR 10M
+                        </Button>
+                        <Button
+                          variant="outline"
+                          size="sm"
+                          className="justify-start font-sans-luxury tracking-wide hover:bg-primary/10 hover:text-primary hover:border-primary"
+                        >
+                          ✓ Verified Only
+                        </Button>
+                      </div>
+                    </div>
+                    
+                    <div className="h-px bg-border" />
+                    
                     <FilterContent />
                   </div>
                 </div>
@@ -723,34 +791,29 @@ const Collection = () => {
                   )}
                 </div>
 
-                {/* Car Grid */}
-                {filteredAndSortedCars.length > 0 ? (
-                  <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
+                {/* Car Grid - 2 Columns with Spacious Layout */}
+                {loading ? (
+                  // Loading skeletons
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
+                    {[1, 2, 3, 4].map(i => (
+                      <CarCardSkeleton key={i} />
+                    ))}
+                  </div>
+                ) : filteredAndSortedCars.length > 0 ? (
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
                     {filteredAndSortedCars.map((car, index) => (
                       <div
                         key={car.id}
-                        className="animate-fade-in"
-                        style={{ animationDelay: `${index * 0.05}s` }}
+                        className="animate-scale-in"
+                        style={{ animationDelay: `${index * 0.08}s` }}
                       >
                         <CarCard car={car} />
                       </div>
                     ))}
                   </div>
                 ) : (
-                  <div className="text-center py-20 bg-muted/30 rounded-2xl">
-                    <div className="w-16 h-16 rounded-full bg-muted mx-auto mb-4 flex items-center justify-center">
-                      <Search className="h-8 w-8 text-muted-foreground" />
-                    </div>
-                    <h3 className="font-display text-2xl font-semibold mb-2">
-                      No vehicles found
-                    </h3>
-                    <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                      Try adjusting your filters or search criteria to find what you're looking for.
-                    </p>
-                    <Button variant="outline" onClick={clearAllFilters}>
-                      Clear All Filters
-                    </Button>
-                  </div>
+                  // Empty state with beautiful animation
+                  <NoSearchResults onClear={clearAllFilters} />
                 )}
               </div>
             </div>

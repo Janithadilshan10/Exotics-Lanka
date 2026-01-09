@@ -14,8 +14,9 @@ export default {
     },
     extend: {
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
+        sans: ['Montserrat', 'system-ui', 'sans-serif'],
         display: ['Playfair Display', 'Georgia', 'serif'],
+        luxury: ['Cormorant Garamond', 'Georgia', 'serif'],
       },
       colors: {
         border: "hsl(var(--border))",

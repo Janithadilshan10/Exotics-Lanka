@@ -5,6 +5,10 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
+import { ButtonLoading } from "@/components/ui/loading";
+import { successConfetti } from "@/lib/confetti";
 import {
   Select,
   SelectContent,
@@ -77,8 +81,14 @@ const Contact = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Contact Us - Get In Touch"
+        description="Have questions? Contact Exotics Lanka. We're here to help with your luxury car buying or selling needs."
+        keywords="contact us, customer support, get in touch, help"
+      />
       <Navbar />
-      <main className="pt-20">
+      <PageTransition>
+        <main id="main-content" className="pt-20">
         {/* Hero */}
         <section className="py-16 bg-gradient-to-br from-background via-muted/30 to-background">
           <div className="container mx-auto px-4 text-center">
@@ -315,6 +325,7 @@ const Contact = () => {
           </div>
         </section>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

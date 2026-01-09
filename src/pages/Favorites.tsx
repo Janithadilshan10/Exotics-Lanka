@@ -8,11 +8,17 @@ import { useAuth } from "@/contexts/AuthContext";
 import { Heart, Share2, Trash2 } from "lucide-react";
 import { featuredCars } from "@/data/mockData";
 import { toast } from "sonner";
+import { PageTransition } from "@/components/PageTransition";
+import { NoFavorites } from "@/components/ui/empty-state";
+import { CarCardSkeleton } from "@/components/ui/skeleton";
+import { heartConfetti } from "@/lib/confetti";
+import { SEO } from "@/components/SEO";
 
 const Favorites = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useAuth();
   const [favorites, setFavorites] = useState<string[]>([]);
+  const [loading, setLoading] = useState(false); // Set to true when fetching
 
   useEffect(() => {
     if (!isAuthenticated) {
@@ -57,8 +63,14 @@ const Favorites = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="My Favorites - Saved Vehicles"
+        description="View and manage your favorite luxury cars. Keep track of vehicles you love and compare them easily."
+        keywords="favorite cars, saved vehicles, wishlist"
+      />
       <Navbar />
-      <main className="pt-20 pb-12">
+      <PageTransition>
+        <main id="main-content" className="pt-20 pb-12">
         <div className="container mx-auto px-4">
           {/* Header */}
           <div className="mb-8">
@@ -97,7 +109,13 @@ const Favorites = () => {
           </div>
 
           {/* Favorites Grid */}
-          {favoriteCars.length > 0 ? (
+          {loading ? (
+            <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[1, 2, 3, 4, 5, 6].map(i => (
+                <CarCardSkeleton key={i} />
+              ))}
+            </div>
+          ) : favoriteCars.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
               {favoriteCars.map((car) => (
                 <div key={car.id} className="relative">
@@ -114,24 +132,11 @@ const Favorites = () => {
             </div>
           ) : (
             /* Empty State */
-            <div className="text-center py-20">
-              <div className="w-20 h-20 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-6">
-                <Heart className="h-10 w-10 text-primary" />
-              </div>
-              <h3 className="font-display text-2xl font-semibold mb-2">
-                No favorites yet
-              </h3>
-              <p className="text-muted-foreground mb-6 max-w-md mx-auto">
-                Start browsing our collection and save your favorite vehicles to
-                compare and revisit later
-              </p>
-              <Link to="/collection">
-                <Button variant="gold">Browse Collection</Button>
-              </Link>
-            </div>
+            <NoFavorites onBrowse={() => navigate("/collection")} />
           )}
         </div>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

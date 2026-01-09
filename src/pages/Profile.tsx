@@ -11,6 +11,9 @@ import { Badge } from "@/components/ui/badge";
 import { useAuth } from "@/contexts/AuthContext";
 import { Camera, Save, User as UserIcon, Mail, Phone, MapPin, Calendar } from "lucide-react";
 import { toast } from "sonner";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
+import { successConfetti } from "@/lib/confetti";
 
 const Profile = () => {
   const navigate = useNavigate();
@@ -77,8 +80,14 @@ const Profile = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="My Profile - Account Settings"
+        description="Manage your Exotics Lanka profile, update your information, and customize your account settings."
+        keywords="user profile, account settings, edit profile"
+      />
       <Navbar />
-      <main className="pt-20 pb-12">
+      <PageTransition>
+        <main id="main-content" className="pt-20 pb-12">
         <div className="container mx-auto px-4 max-w-4xl">
           {/* Header */}
           <div className="mb-8">
@@ -331,6 +340,7 @@ const Profile = () => {
           </div>
         </div>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

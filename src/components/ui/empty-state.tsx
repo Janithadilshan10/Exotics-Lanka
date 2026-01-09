@@ -330,3 +330,5 @@ export function EmptyIllustration({ type }: { type: 'car' | 'search' | 'message'
   return illustrations[type];
 }
 
+
+

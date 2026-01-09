@@ -8,6 +8,9 @@ import { useSavedSearches } from "@/contexts/SavedSearchContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { Search, Bell, TrendingUp, Calendar } from "lucide-react";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
+import { NoSavedSearches } from "@/components/ui/empty-state";
 
 const SavedSearches = () => {
   const { isAuthenticated } = useAuth();
@@ -41,8 +44,14 @@ const SavedSearches = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="Saved Searches - Search Alerts"
+        description="Manage your saved searches and get notified when new luxury cars match your criteria."
+        keywords="saved searches, search alerts, notifications, car alerts"
+      />
       <Navbar />
-      <main className="flex-1 pt-20">
+      <PageTransition>
+        <main id="main-content" className="flex-1 pt-20">
         {/* Header */}
         <section className="py-12 bg-gradient-to-br from-background via-muted/30 to-background border-b border-border">
           <div className="container mx-auto px-4">
@@ -268,6 +277,7 @@ const SavedSearches = () => {
           </section>
         )}
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

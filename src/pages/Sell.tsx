@@ -3,12 +3,20 @@ import { Footer } from "@/components/layout/Footer";
 import { Button } from "@/components/ui/button";
 import { Car, Building2, Shield, TrendingUp, Clock, Users } from "lucide-react";
 import { Link } from "react-router-dom";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
 
 const Sell = () => {
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Sell Your Car - List Your Vehicle"
+        description="Sell your luxury or exotic car on Exotics Lanka. Reach thousands of potential buyers across Sri Lanka."
+        keywords="sell car, sell vehicle, list car for sale, sell luxury car"
+      />
       <Navbar />
-      <main className="pt-20">
+      <PageTransition>
+        <main id="main-content" className="pt-20">
         {/* Hero */}
         <section className="py-24 bg-gradient-to-br from-background via-muted/30 to-background">
           <div className="container mx-auto px-4 text-center">
@@ -137,6 +145,7 @@ const Sell = () => {
           </div>
         </section>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

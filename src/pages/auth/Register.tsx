@@ -7,6 +7,10 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useAuth } from "@/contexts/AuthContext";
 import { Eye, EyeOff, Mail, Lock, User, ArrowLeft, Check } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
+import { ButtonLoading } from "@/components/ui/loading";
+import { successConfetti } from "@/lib/confetti";
 
 const Register = () => {
   const [formData, setFormData] = useState({
@@ -77,7 +81,14 @@ const Register = () => {
   ];
 
   return (
-    <div className="min-h-screen flex">
+    <>
+      <SEO 
+        title="Register - Create Your Account"
+        description="Join Exotics Lanka today. Create an account to buy or sell luxury and exotic vehicles across Sri Lanka."
+        keywords="register, sign up, create account, join"
+      />
+      <PageTransition>
+        <div className="min-h-screen flex">
       {/* Left Side - Form */}
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
@@ -371,6 +382,8 @@ const Register = () => {
         </div>
       </div>
     </div>
+    </PageTransition>
+    </>
   );
 };
 

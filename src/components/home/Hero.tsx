@@ -15,7 +15,7 @@ export function Hero() {
   // Dark mode image - Porsche at night
   const darkImage = "https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=2070&auto=format&fit=crop";
   
-  // Light mode image - White/Silver Porsche in bright elegant setting
+  // Light mode image - Elegant white Porsche in pristine bright setting
   const lightImage = "https://images.unsplash.com/photo-1614200187524-dc4b892acf16?q=80&w=2070&auto=format&fit=crop";
 
   const currentTheme = mounted ? theme : "dark";
@@ -39,85 +39,54 @@ export function Hero() {
           </>
         ) : (
           <>
-            {/* Light mode overlay - warm champagne/cream tint matching theme */}
-            <div className="absolute inset-0 bg-[hsl(40,25%,96%)]/90" />
-            <div className="absolute inset-0 bg-gradient-to-b from-[hsl(40,25%,96%)]/95 via-[hsl(40,25%,96%)]/85 to-[hsl(40,25%,96%)]/90" />
-            <div className="absolute inset-0 bg-gradient-to-br from-primary/12 via-transparent to-primary/6" />
+            {/* Light mode overlay - polished premium overlay */}
+            <div className="absolute inset-0 bg-gradient-to-b from-white/60 via-white/40 to-white/70" />
+            <div className="absolute inset-0 bg-gradient-to-br from-[hsl(40,25%,98%)]/50 via-transparent to-[hsl(40,25%,98%)]/40" />
+            <div className="absolute inset-0 bg-gradient-to-t from-primary/8 via-transparent to-transparent" />
           </>
         )}
       </div>
 
-      {/* Floating Elements */}
-      <div className="absolute top-1/4 right-1/4 w-96 h-96 bg-primary/10 rounded-full blur-3xl animate-pulse-slow" />
-      <div className="absolute bottom-1/4 left-1/4 w-64 h-64 bg-primary/15 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: "1s" }} />
+      {/* Floating Elements - Removed to show car image clearly */}
 
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center">
-          {/* Badge */}
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary text-sm font-medium mb-8 animate-fade-in">
-            <span className="w-2 h-2 rounded-full bg-primary animate-pulse" />
-            Sri Lanka's Premier Luxury Marketplace
-          </div>
-
-          {/* Heading */}
-          <h1 className="font-display text-5xl md:text-7xl lg:text-8xl font-bold tracking-tight mb-6 animate-fade-in" style={{ animationDelay: "0.1s" }}>
-            Where Elegance
-            <br />
-            <span className="text-gold-gradient">Meets the Road</span>
+          {/* Minimal Heading */}
+          <h1 className="font-display text-6xl md:text-8xl lg:text-9xl font-light tracking-wide mb-16 animate-fade-in leading-tight drop-shadow-2xl">
+            <span className="text-gold-gradient">Exotics</span>
           </h1>
 
-          {/* Subheading */}
-          <p className="text-xl md:text-2xl text-muted-foreground max-w-2xl mx-auto mb-12 animate-fade-in" style={{ animationDelay: "0.2s" }}>
-            Discover exceptional vehicles curated for those who demand perfection.
-          </p>
-
-          {/* Search Bar */}
-          <div className="max-w-2xl mx-auto mb-12 animate-fade-in" style={{ animationDelay: "0.3s" }}>
+          {/* Search Bar - Minimal */}
+          <div className="max-w-2xl mx-auto animate-fade-in" style={{ animationDelay: "0.2s" }}>
             <div className="relative group">
-              <div className="absolute -inset-1 bg-gold-gradient rounded-2xl opacity-20 blur-lg group-hover:opacity-30 transition-opacity" />
-              <div className="relative flex items-center bg-card rounded-xl border border-border shadow-xl">
-                <Search className="ml-5 h-5 w-5 text-muted-foreground" />
+              <div className="absolute -inset-1 bg-gold-gradient rounded-2xl opacity-0 blur-lg group-hover:opacity-20 transition-opacity" />
+              <div className="relative flex items-center glass-card rounded-2xl border border-primary/20 shadow-2xl backdrop-blur-xl">
+                <Search className="ml-6 h-5 w-5 text-muted-foreground" />
                 <input
                   type="text"
                   placeholder="Search by make, model, or keyword..."
-                  className="flex-1 px-4 py-5 bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none"
+                  className="flex-1 px-5 py-6 bg-transparent text-foreground placeholder:text-muted-foreground focus:outline-none font-sans-luxury tracking-wide"
                 />
-                <Button variant="gold" size="lg" className="m-2">
+                <Button variant="gold" size="lg" className="m-2 magnetic-button">
                   Search
                 </Button>
               </div>
             </div>
           </div>
 
-          {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 animate-fade-in" style={{ animationDelay: "0.4s" }}>
+          {/* Single CTA - Minimal */}
+          <div className="flex items-center justify-center gap-6 mt-12 animate-fade-in" style={{ animationDelay: "0.4s" }}>
             <Link to="/collection">
-              <Button variant="luxury" size="xl" className="group">
+              <Button variant="luxury" size="xl" className="group magnetic-button">
                 Explore Collection
                 <ArrowRight className="ml-2 h-5 w-5 transition-transform group-hover:translate-x-1" />
               </Button>
             </Link>
             <Link to="/sell">
-              <Button variant="luxury-outline" size="xl">
+              <Button variant="luxury-outline" size="xl" className="magnetic-button">
                 Sell Your Car
               </Button>
             </Link>
-          </div>
-
-          {/* Stats */}
-          <div className="grid grid-cols-3 gap-8 max-w-lg mx-auto mt-20 animate-fade-in" style={{ animationDelay: "0.5s" }}>
-            <div>
-              <p className="font-display text-3xl md:text-4xl font-bold text-gold-gradient">500+</p>
-              <p className="text-sm text-muted-foreground mt-1">Luxury Vehicles</p>
-            </div>
-            <div>
-              <p className="font-display text-3xl md:text-4xl font-bold text-gold-gradient">50+</p>
-              <p className="text-sm text-muted-foreground mt-1">Verified Dealers</p>
-            </div>
-            <div>
-              <p className="font-display text-3xl md:text-4xl font-bold text-gold-gradient">10K+</p>
-              <p className="text-sm text-muted-foreground mt-1">Happy Buyers</p>
-            </div>
           </div>
         </div>
       </div>

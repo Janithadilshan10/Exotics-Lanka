@@ -2,6 +2,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Shield } from "lucide-react";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
 
 const Privacy = () => {
   const lastUpdated = "January 1, 2024";
@@ -160,8 +162,14 @@ Our Data Protection Officer can be reached at: dpo@exotics.lk`,
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Privacy Policy - Your Data Protection"
+        description="Learn how Exotics Lanka protects your privacy and handles your personal information."
+        keywords="privacy policy, data protection, privacy, security"
+      />
       <Navbar />
-      <main className="pt-20">
+      <PageTransition>
+        <main id="main-content" className="pt-20">
         {/* Hero */}
         <section className="py-16 bg-gradient-to-br from-background via-muted/30 to-background">
           <div className="container mx-auto px-4 text-center">
@@ -221,6 +229,7 @@ Our Data Protection Officer can be reached at: dpo@exotics.lk`,
           </div>
         </section>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

@@ -6,6 +6,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
+import { ButtonLoading } from "@/components/ui/loading";
+import { ProgressBar } from "@/components/ui/loading";
+import { fireworksConfetti } from "@/lib/confetti";
 import {
   Select,
   SelectContent,
@@ -536,8 +541,14 @@ const CreateListing = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Create Listing - Sell Your Car"
+        description="List your luxury or exotic vehicle for sale on Exotics Lanka. Reach thousands of potential buyers across Sri Lanka."
+        keywords="sell car, create listing, list vehicle, sell luxury car"
+      />
       <Navbar />
-      <main className="pt-20 pb-12">
+      <PageTransition>
+        <main id="main-content" className="pt-20 pb-12">
         <div className="container mx-auto px-4 max-w-4xl">
           {/* Header */}
           <div className="mb-8">
@@ -620,6 +631,7 @@ const CreateListing = () => {
           </div>
         </div>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

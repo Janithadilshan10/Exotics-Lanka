@@ -13,6 +13,7 @@ import { StarRatingDisplay } from "@/components/reviews/StarRating";
 import { useReviews } from "@/contexts/ReviewContext";
 import { PageTransition } from "@/components/PageTransition";
 import { ListingSkeleton } from "@/components/ui/skeleton";
+import { SEO } from "@/components/SEO";
 import { featuredCars } from "@/data/mockData";
 import {
   Heart,
@@ -38,6 +39,7 @@ import { useComparison } from "@/contexts/ComparisonContext";
 
 const CarDetail = () => {
   const { id } = useParams();
+  const [loading, setLoading] = useState(false); // Set to true when fetching
   const navigate = useNavigate();
   const [isShareDialogOpen, setIsShareDialogOpen] = useState(false);
   const [isReportDialogOpen, setIsReportDialogOpen] = useState(false);
@@ -48,6 +50,21 @@ const CarDetail = () => {
   const { getAverageRating, getReviewsForSeller } = useReviews();
   
   const car = featuredCars.find((c) => c.id === id);
+
+  // Show loading skeleton
+  if (loading) {
+    return (
+      <div className="min-h-screen">
+        <Navbar />
+        <PageTransition>
+          <div className="container mx-auto px-4 pt-24 pb-12">
+            <ListingSkeleton />
+          </div>
+        </PageTransition>
+        <Footer />
+      </div>
+    );
+  }
 
   if (!car) {
     return (
@@ -143,6 +160,13 @@ const CarDetail = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title={`${car.year} ${car.make} ${car.model}`}
+        description={`${car.year} ${car.make} ${car.model} - LKR ${(Number(car.price) / 1000000).toFixed(1)}M. ${car.mileage} km. Located in ${car.location}. Premium luxury vehicle for sale in Sri Lanka.`}
+        keywords={`${car.make} ${car.model}, ${car.year} ${car.make}, luxury car sri lanka, ${car.make} for sale`}
+        ogImage={car.image}
+        type="product"
+      />
       <Navbar />
       <PageTransition>
         <main id="main-content" className="pt-20">

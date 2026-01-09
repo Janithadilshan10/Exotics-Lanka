@@ -9,6 +9,10 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { useMessaging, Conversation } from "@/contexts/MessagingContext";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
+import { ConversationSkeleton } from "@/components/ui/skeleton";
+import { NoMessages } from "@/components/ui/empty-state";
 import {
   MessageCircle,
   Send,
@@ -33,6 +37,7 @@ const Inbox = () => {
   );
   const [messageInput, setMessageInput] = useState("");
   const [searchQuery, setSearchQuery] = useState("");
+  const [loading, setLoading] = useState(false); // Set to true when fetching
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -105,8 +110,14 @@ const Inbox = () => {
 
   return (
     <div className="min-h-screen flex flex-col">
+      <SEO 
+        title="Messages - Inbox"
+        description="View and manage your messages with buyers and sellers on Exotics Lanka."
+        keywords="messages, inbox, chat, conversations"
+      />
       <Navbar />
-      <main className="flex-1 pt-20">
+      <PageTransition>
+        <main id="main-content" className="flex-1 pt-20">
         <div className="h-[calc(100vh-5rem)] flex">
           {/* Conversation List Sidebar */}
           <div
@@ -134,23 +145,18 @@ const Inbox = () => {
 
             {/* Conversations List */}
             <div className="flex-1 overflow-y-auto">
-              {filteredConversations.length === 0 ? (
-                <div className="flex flex-col items-center justify-center h-full p-8 text-center">
-                  <div className="w-16 h-16 rounded-full bg-muted flex items-center justify-center mb-4">
-                    <MessageCircle className="h-8 w-8 text-muted-foreground" />
-                  </div>
-                  <h3 className="font-semibold mb-2">No messages yet</h3>
-                  <p className="text-sm text-muted-foreground mb-4">
-                    {searchQuery
-                      ? "No conversations match your search"
-                      : "Start a conversation by messaging a seller"}
-                  </p>
-                  {!searchQuery && (
-                    <Button variant="outline" onClick={() => navigate("/collection")}>
-                      Browse Vehicles
-                    </Button>
-                  )}
+              {loading ? (
+                // Loading skeletons
+                <div className="space-y-2 p-2">
+                  {[1, 2, 3, 4, 5].map(i => (
+                    <ConversationSkeleton key={i} />
+                  ))}
                 </div>
+              ) : filteredConversations.length === 0 ? (
+                <NoMessages 
+                  isSearching={!!searchQuery}
+                  onBrowse={() => navigate("/collection")}
+                />
               ) : (
                 filteredConversations.map((conversation) => (
                   <button
@@ -410,6 +416,7 @@ const Inbox = () => {
           </div>
         </div>
       </main>
+      </PageTransition>
     </div>
   );
 };

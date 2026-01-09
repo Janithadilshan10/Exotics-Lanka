@@ -2,6 +2,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/badge";
 import { Shield, Award, Users, TrendingUp, Heart, Sparkles } from "lucide-react";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
 
 const About = () => {
   const stats = [
@@ -59,8 +61,14 @@ const About = () => {
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="About Us - Sri Lanka's Premier Luxury Car Marketplace"
+        description="Learn about Exotics Lanka, the leading platform for buying and selling luxury and exotic vehicles in Sri Lanka."
+        keywords="about us, luxury car marketplace, exotic cars sri lanka, company info"
+      />
       <Navbar />
-      <main className="pt-20">
+      <PageTransition>
+        <main id="main-content" className="pt-20">
         {/* Hero Section */}
         <section className="relative py-24 bg-gradient-to-br from-background via-muted/30 to-background">
           <div className="container mx-auto px-4">
@@ -224,6 +232,7 @@ const About = () => {
           </div>
         </section>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

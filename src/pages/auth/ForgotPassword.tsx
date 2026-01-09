@@ -5,6 +5,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Mail, ArrowLeft, CheckCircle } from "lucide-react";
 import { toast } from "sonner";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
+import { ButtonLoading } from "@/components/ui/loading";
 
 const ForgotPassword = () => {
   const [email, setEmail] = useState("");
@@ -83,7 +86,14 @@ const ForgotPassword = () => {
   }
 
   return (
-    <div className="min-h-screen flex">
+    <>
+      <SEO 
+        title="Forgot Password - Reset Your Password"
+        description="Reset your Exotics Lanka account password. Get back to buying and selling luxury vehicles in minutes."
+        keywords="forgot password, reset password, password recovery"
+      />
+      <PageTransition>
+        <div className="min-h-screen flex">
       {/* Left Side - Form */}
       <div className="flex-1 flex items-center justify-center p-8">
         <div className="w-full max-w-md">
@@ -176,6 +186,8 @@ const ForgotPassword = () => {
         </div>
       </div>
     </div>
+    </PageTransition>
+    </>
   );
 };
 

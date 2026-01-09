@@ -2,6 +2,8 @@ import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { Badge } from "@/components/ui/badge";
 import { FileText } from "lucide-react";
+import { PageTransition } from "@/components/PageTransition";
+import { SEO } from "@/components/SEO";
 
 const Terms = () => {
   const lastUpdated = "January 1, 2024";
@@ -122,8 +124,14 @@ Address: 123 Galle Road, Colombo 03, Sri Lanka`,
 
   return (
     <div className="min-h-screen">
+      <SEO 
+        title="Terms of Service - User Agreement"
+        description="Read the terms of service for using Exotics Lanka's luxury car marketplace platform."
+        keywords="terms of service, user agreement, legal terms"
+      />
       <Navbar />
-      <main className="pt-20">
+      <PageTransition>
+        <main id="main-content" className="pt-20">
         {/* Hero */}
         <section className="py-16 bg-gradient-to-br from-background via-muted/30 to-background">
           <div className="container mx-auto px-4 text-center">
@@ -183,6 +191,7 @@ Address: 123 Galle Road, Colombo 03, Sri Lanka`,
           </div>
         </section>
       </main>
+      </PageTransition>
       <Footer />
     </div>
   );

@@ -1,88 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Montserrat:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@300;400;500;600;700&display=swap');
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
-
 @layer base {
   :root {
-    /* Light Theme - Premium Cream & Gold */
-    --background: 40 25% 96%;
-    --foreground: 30 15% 15%;
+    /* Light Theme - Premium Ivory & Gold */
+    --background: 40 20% 98%;           /* Soft ivory #faf9f7 */
+    --foreground: 30 15% 12%;           /* Rich dark brown */
     
-    --card: 40 30% 98%;
-    --card-foreground: 30 15% 15%;
+    --card: 0 0% 100%;                  /* Pure white cards */
+    --card-foreground: 30 15% 12%;
     
-    --popover: 40 30% 99%;
-    --popover-foreground: 30 15% 15%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 30 15% 12%;
     
-    --primary: 45 100% 51%;
-    --primary-foreground: 40 30% 98%;
+    --primary: 43 74% 52%;              /* Rich gold #d4af37 */
+    --primary-foreground: 0 0% 100%;
     
-    --secondary: 38 20% 92%;
+    --secondary: 40 15% 92%;            /* Light cream */
     --secondary-foreground: 30 15% 20%;
     
-    --muted: 35 15% 94%;
-    --muted-foreground: 30 10% 45%;
+    --muted: 40 12% 95%;                /* Very light cream */
+    --muted-foreground: 30 8% 40%;      /* Muted brown */
     
-    --accent: 45 100% 51%;
-    --accent-foreground: 40 30% 98%;
+    --accent: 43 74% 52%;               /* Gold accent */
+    --accent-foreground: 0 0% 100%;
     
     --destructive: 0 70% 55%;
-    --destructive-foreground: 40 30% 98%;
+    --destructive-foreground: 0 0% 100%;
     
-    --border: 38 18% 85%;
-    --input: 38 15% 94%;
-    --ring: 45 100% 51%;
+    --border: 40 15% 88%;               /* Subtle cream border */
+    --input: 40 12% 96%;
+    --ring: 43 74% 52%;
     
     --radius: 0.75rem;
     
     /* Premium Gold Palette */
-    --gold: 45 100% 51%;
-    --gold-light: 48 100% 65%;
-    --gold-dark: 43 100% 40%;
+    --gold: 43 74% 52%;                 /* #d4af37 */
+    --gold-light: 45 85% 65%;           /* Lighter gold */
+    --gold-dark: 43 74% 42%;            /* Darker gold */
     --charcoal: 30 10% 12%;
-    --gallery: 38 15% 94%;
+    --gallery: 40 12% 95%;
+    
+    /* Glass Effects for Light Mode */
+    --glass-bg-light: 255 255 255 / 0.7;
+    --glass-border-light: 212 175 55 / 0.15;
     
     /* Sidebar */
-    --sidebar-background: 38 22% 95%;
-    --sidebar-foreground: 30 15% 15%;
-    --sidebar-primary: 45 100% 51%;
-    --sidebar-primary-foreground: 40 30% 98%;
-    --sidebar-accent: 38 18% 90%;
+    --sidebar-background: 40 15% 97%;
+    --sidebar-foreground: 30 15% 12%;
+    --sidebar-primary: 43 74% 52%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 40 12% 93%;
     --sidebar-accent-foreground: 30 15% 20%;
-    --sidebar-border: 38 18% 85%;
-    --sidebar-ring: 45 100% 51%;
+    --sidebar-border: 40 15% 88%;
+    --sidebar-ring: 43 74% 52%;
   }
 
   .dark {
-    /* Dealer Portal Theme - Premium Command Center */
-    --background: 0 0% 3%;
+    /* Luxury Dark Theme - Premium Charcoal & Gold */
+    --background: 30 10% 5%;        /* Deep charcoal #0d0c0a */
     --foreground: 45 100% 90%;
     
-    --card: 0 0% 7%;
+    --card: 30 10% 8%;              /* Darker charcoal cards #141311 */
     --card-foreground: 45 100% 90%;
     
-    --popover: 0 0% 5%;
+    --popover: 30 10% 6%;
     --popover-foreground: 45 100% 90%;
     
-    --primary: 45 100% 51%;
-    --primary-foreground: 0 0% 0%;
+    --primary: 45 100% 51%;         /* Rich gold #d4af37 */
+    --primary-foreground: 30 10% 5%;
     
-    --secondary: 0 0% 12%;
+    --secondary: 30 10% 12%;
     --secondary-foreground: 45 100% 90%;
     
-    --muted: 0 0% 10%;
-    --muted-foreground: 0 0% 65%;
+    --muted: 30 10% 10%;
+    --muted-foreground: 0 0% 60%;
     
-    --accent: 0 0% 10%;
-    --accent-foreground: 45 100% 90%;
+    --accent: 45 100% 51%;          /* Gold accent */
+    --accent-foreground: 30 10% 5%;
     
     --destructive: 0 63% 31%;
     --destructive-foreground: 45 100% 90%;
     
-    --border: 45 15% 15%;
-    --input: 0 0% 10%;
+    --border: 45 15% 18%;           /* Subtle gold border */
+    --input: 30 10% 10%;
     --ring: 45 100% 51%;
     
     /* Data Visualization Colors */
@@ -118,6 +122,18 @@
   
   h1, h2, h3, h4, h5, h6 {
     @apply font-display;
+    letter-spacing: 0.02em;
+    font-weight: 300;
+  }
+  
+  /* Luxury Typography */
+  .font-luxury {
+    font-family: 'Cormorant Garamond', serif;
+    letter-spacing: 0.03em;
+  }
+  
+  .font-sans-luxury {
+    font-family: 'Montserrat', sans-serif;
   }
 
   /* Accessibility Improvements */
@@ -209,9 +225,27 @@
     @apply bg-card/60 backdrop-blur-2xl border border-white/5;
   }
   
+  /* Light mode glassmorphism */
+  :root .glass {
+    @apply bg-white/70 backdrop-blur-xl border border-primary/10;
+  }
+  
+  :root .glass-card {
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(212, 175, 55, 0.15);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.06);
+  }
+  
   /* Gold gradient text */
   .text-gold-gradient {
     @apply bg-gradient-to-r from-[#D4AF37] via-[#FFD700] to-[#D4AF37] bg-clip-text text-transparent;
+  }
+  
+  /* Light mode gold gradient - slightly darker for contrast */
+  :root .text-gold-gradient {
+    @apply bg-gradient-to-r from-[#B8941F] via-[#D4AF37] to-[#B8941F] bg-clip-text text-transparent;
   }
   
   /* Luxury card hover */
@@ -219,17 +253,30 @@
     @apply transition-all duration-500 ease-out hover:shadow-2xl hover:shadow-[#D4AF37]/20 hover:-translate-y-1;
   }
   
-  /* Glow effects */
-  .glow-gold {
+  /* Glow effects - Dark mode */
+  .dark .glow-gold {
     box-shadow: 0 0 60px hsl(45 100% 51% / 0.3), 0 0 100px hsl(45 100% 51% / 0.15);
   }
   
-  .glow-emerald {
+  .dark .glow-emerald {
     box-shadow: 0 0 30px hsl(152 76% 47% / 0.2);
   }
   
-  .glow-rose {
+  .dark .glow-rose {
     box-shadow: 0 0 30px hsl(350 89% 60% / 0.2);
+  }
+  
+  /* Glow effects - Light mode (more subtle) */
+  :root .glow-gold {
+    box-shadow: 0 0 40px hsl(43 74% 52% / 0.2), 0 0 60px hsl(43 74% 52% / 0.1);
+  }
+  
+  :root .glow-emerald {
+    box-shadow: 0 0 20px hsl(152 76% 47% / 0.15);
+  }
+  
+  :root .glow-rose {
+    box-shadow: 0 0 20px hsl(350 89% 60% / 0.15);
   }
   
   /* Animated gradient border */
@@ -250,17 +297,30 @@
     mask-composite: exclude;
   }
   
-  /* Smooth scrollbar */
-  .scrollbar-luxury::-webkit-scrollbar {
+  /* Smooth scrollbar - Dark mode */
+  .dark .scrollbar-luxury::-webkit-scrollbar {
     width: 8px;
   }
   
-  .scrollbar-luxury::-webkit-scrollbar-track {
+  .dark .scrollbar-luxury::-webkit-scrollbar-track {
     @apply bg-black/30 rounded-full;
   }
   
-  .scrollbar-luxury::-webkit-scrollbar-thumb {
+  .dark .scrollbar-luxury::-webkit-scrollbar-thumb {
     @apply bg-gradient-to-b from-[#D4AF37] to-[#FFD700] rounded-full hover:from-[#FFD700] hover:to-[#D4AF37];
+  }
+  
+  /* Smooth scrollbar - Light mode */
+  :root .scrollbar-luxury::-webkit-scrollbar {
+    width: 8px;
+  }
+  
+  :root .scrollbar-luxury::-webkit-scrollbar-track {
+    @apply bg-primary/10 rounded-full;
+  }
+  
+  :root .scrollbar-luxury::-webkit-scrollbar-thumb {
+    @apply bg-gradient-to-b from-[#D4AF37] to-[#B8941F] rounded-full hover:from-[#FFD700] hover:to-[#D4AF37];
   }
   
   /* Animation utilities */
@@ -279,6 +339,102 @@
   
   .animate-slide-up {
     animation: slideUp 0.3s ease-out;
+  }
+  
+  .animate-fade-in {
+    animation: fadeIn 0.6s ease-out forwards;
+    opacity: 0;
+  }
+  
+  .animate-scale-in {
+    animation: scaleIn 0.5s ease-out forwards;
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  
+  /* Magnetic button effect */
+  .magnetic-button {
+    transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    will-change: transform;
+  }
+  
+  .magnetic-button:hover {
+    transform: scale(1.05);
+  }
+  
+  .magnetic-button:active {
+    transform: scale(0.95);
+  }
+  
+  /* Premium card lift effect */
+  .card-lift {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: transform, box-shadow;
+  }
+  
+  /* Dark mode hover */
+  .dark .card-lift:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(212, 175, 55, 0.25), 
+                0 10px 30px rgba(0, 0, 0, 0.4);
+  }
+  
+  /* Light mode hover */
+  :root .card-lift:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2), 
+                0 10px 30px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Glassmorphism card - Dark mode */
+  .dark .glass-card {
+    background: rgba(20, 19, 17, 0.7);
+    backdrop-filter: blur(20px) saturate(180%);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid rgba(212, 175, 55, 0.1);
+  }
+  
+  /* Premium image overlay */
+  .image-overlay-luxury {
+    position: relative;
+    overflow: hidden;
+  }
+  
+  /* Dark mode overlay */
+  .dark .image-overlay-luxury::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(13, 12, 10, 0.9) 0%,
+      rgba(13, 12, 10, 0.4) 40%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+  
+  /* Light mode overlay */
+  :root .image-overlay-luxury::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      to top,
+      rgba(0, 0, 0, 0.7) 0%,
+      rgba(0, 0, 0, 0.3) 40%,
+      transparent 100%
+    );
+    pointer-events: none;
+  }
+  
+  /* Parallax effect */
+  .parallax-slow {
+    transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+  
+  .parallax-slow:hover {
+    transform: scale(1.1) translateZ(0);
   }
   
   /* Hide scrollbar */
@@ -431,6 +587,11 @@
   .shadow-hover-gold {
     @apply transition-shadow duration-300 hover:shadow-lg hover:shadow-[#D4AF37]/30;
   }
+  
+  /* Light mode - more subtle gold shadow */
+  :root .shadow-hover-gold {
+    @apply transition-shadow duration-300 hover:shadow-lg hover:shadow-[#D4AF37]/20;
+  }
 
   /* Border glow effect */
   .border-glow {
@@ -514,6 +675,39 @@
     transform: translateY(0);
     opacity: 1;
   }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes ken-burns {
+  0% {
+    transform: scale(1) translate(0, 0);
+  }
+  100% {
+    transform: scale(1.1) translate(-2%, -2%);
+  }
+}
+
+.animate-ken-burns {
+  animation: ken-burns 20s ease-in-out infinite alternate;
 }
 
 @keyframes pulse-custom {
