@@ -39,6 +39,11 @@ import DealerInbox from "./pages/dealer/Inbox";
 import Staff from "./pages/dealer/Staff";
 import Settings from "./pages/dealer/Settings";
 import NotFound from "./pages/NotFound";
+import Verification from "./pages/Verification";
+import VerificationQueue from "./pages/admin/VerificationQueue";
+import ResolutionCenter from "./pages/ResolutionCenter";
+
+import DealerApplication from "./pages/dealer/DealerApplication";
 
 const queryClient = new QueryClient();
 
@@ -56,48 +61,55 @@ const App = () => (
                   <ComparisonProvider>
                     <SkipToContent />
                     <Routes>
-                <Route path="/" element={<Index />} />
-                <Route path="/collection" element={<Collection />} />
-                <Route path="/car/:id" element={<CarDetail />} />
-                <Route path="/compare" element={<Compare />} />
-                <Route path="/sell" element={<Sell />} />
-              
-              {/* Auth Routes */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/forgot-password" element={<ForgotPassword />} />
-              
-              {/* User Routes (Protected) */}
-              <Route path="/dashboard" element={<Dashboard />} />
-              <Route path="/listing/create" element={<CreateListing />} />
-              <Route path="/listing/edit/:id" element={<CreateListing />} />
-              <Route path="/favorites" element={<Favorites />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/inbox" element={<Inbox />} />
-              <Route path="/saved-searches" element={<SavedSearches />} />
-              <Route path="/settings" element={<Settings />} />
-              
-              {/* Dealer Portal */}
-              <Route path="/dealer" element={<DealerLayout />}>
-                <Route index element={<DealerHome />} />
-                <Route path="analytics" element={<Analytics />} />
-                <Route path="inventory" element={<Inventory />} />
-                <Route path="inbox" element={<DealerInbox />} />
-                <Route path="staff" element={<Staff />} />
-                <Route path="settings" element={<Settings />} />
-              </Route>
-              
-              {/* Static Pages */}
-              <Route path="/about" element={<About />} />
-              <Route path="/contact" element={<Contact />} />
-              <Route path="/faq" element={<FAQ />} />
-              <Route path="/terms" element={<Terms />} />
-              <Route path="/privacy" element={<Privacy />} />
-              <Route path="/how-it-works" element={<HowItWorks />} />
-              
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-            <ComparisonBar />
+                      <Route path="/" element={<Index />} />
+                      <Route path="/collection" element={<Collection />} />
+                      <Route path="/car/:id" element={<CarDetail />} />
+                      <Route path="/compare" element={<Compare />} />
+                      <Route path="/sell" element={<Sell />} />
+
+
+                      {/* Auth Routes */}
+                      <Route path="/login" element={<Login />} />
+                      <Route path="/register" element={<Register />} />
+                      <Route path="/dealer/apply" element={<DealerApplication />} />
+                      <Route path="/forgot-password" element={<ForgotPassword />} />
+
+                      {/* User Routes (Protected) */}
+                      <Route path="/dashboard" element={<Dashboard />} />
+                      <Route path="/listing/create" element={<CreateListing />} />
+                      <Route path="/listing/edit/:id" element={<CreateListing />} />
+                      <Route path="/favorites" element={<Favorites />} />
+                      <Route path="/profile" element={<Profile />} />
+                      <Route path="/inbox" element={<Inbox />} />
+                      <Route path="/saved-searches" element={<SavedSearches />} />
+                      <Route path="/settings" element={<Settings />} />
+                      <Route path="/verification" element={<Verification />} />
+                      <Route path="/resolution-center" element={<ResolutionCenter />} />
+
+                      {/* Admin Routes */}
+                      <Route path="/admin/verifications" element={<VerificationQueue />} />
+
+                      {/* Dealer Portal */}
+                      <Route path="/dealer" element={<DealerLayout />}>
+                        <Route index element={<DealerHome />} />
+                        <Route path="analytics" element={<Analytics />} />
+                        <Route path="inventory" element={<Inventory />} />
+                        <Route path="inbox" element={<DealerInbox />} />
+                        <Route path="staff" element={<Staff />} />
+                        <Route path="settings" element={<Settings />} />
+                      </Route>
+
+                      {/* Static Pages */}
+                      <Route path="/about" element={<About />} />
+                      <Route path="/contact" element={<Contact />} />
+                      <Route path="/faq" element={<FAQ />} />
+                      <Route path="/terms" element={<Terms />} />
+                      <Route path="/privacy" element={<Privacy />} />
+                      <Route path="/how-it-works" element={<HowItWorks />} />
+
+                      <Route path="*" element={<NotFound />} />
+                    </Routes>
+                    <ComparisonBar />
                   </ComparisonProvider>
                 </MessagingProvider>
               </ReviewProvider>

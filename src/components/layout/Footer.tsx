@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export function Footer() {
   return (
-    <footer className="bg-foreground text-background py-16">
+    <footer className="border-t border-border/30 bg-muted/30 text-foreground py-16">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
           {/* Brand */}
@@ -12,8 +12,8 @@ export function Footer() {
                 Exotics<span className="text-primary">.lk</span>
               </span>
             </Link>
-            <p className="text-background/70 max-w-md mb-6">
-              Sri Lanka's premier luxury car marketplace. Where exceptional vehicles 
+            <p className="text-muted-foreground max-w-md mb-6">
+              Sri Lanka's premier luxury car marketplace. Where exceptional vehicles
               meet discerning buyers.
             </p>
             <div className="flex gap-4">
@@ -21,7 +21,7 @@ export function Footer() {
                 href="https://facebook.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-background/10 hover:bg-primary flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-full bg-background/50 hover:bg-primary hover:text-primary-foreground border border-border/50 flex items-center justify-center transition-colors"
                 aria-label="Facebook"
               >
                 <span className="text-sm font-bold">f</span>
@@ -30,7 +30,7 @@ export function Footer() {
                 href="https://instagram.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-background/10 hover:bg-primary flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-full bg-background/50 hover:bg-primary hover:text-primary-foreground border border-border/50 flex items-center justify-center transition-colors"
                 aria-label="Instagram"
               >
                 <span className="text-sm font-bold">i</span>
@@ -39,7 +39,7 @@ export function Footer() {
                 href="https://twitter.com"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-10 h-10 rounded-full bg-background/10 hover:bg-primary flex items-center justify-center transition-colors"
+                className="w-10 h-10 rounded-full bg-background/50 hover:bg-primary hover:text-primary-foreground border border-border/50 flex items-center justify-center transition-colors"
                 aria-label="Twitter"
               >
                 <span className="text-sm font-bold">x</span>
@@ -52,22 +52,22 @@ export function Footer() {
             <h4 className="font-display text-lg font-semibold mb-4">Marketplace</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/collection" className="text-background/70 hover:text-primary transition-colors">
+                <Link to="/collection" className="text-muted-foreground hover:text-primary transition-colors">
                   Browse Collection
                 </Link>
               </li>
               <li>
-                <Link to="/sell" className="text-background/70 hover:text-primary transition-colors">
+                <Link to="/sell" className="text-muted-foreground hover:text-primary transition-colors">
                   Sell Your Car
                 </Link>
               </li>
               <li>
-                <Link to="/how-it-works" className="text-background/70 hover:text-primary transition-colors">
+                <Link to="/how-it-works" className="text-muted-foreground hover:text-primary transition-colors">
                   How It Works
                 </Link>
               </li>
               <li>
-                <Link to="/dealer" className="text-background/70 hover:text-primary transition-colors">
+                <Link to="/dealer" className="text-muted-foreground hover:text-primary transition-colors">
                   Dealer Portal
                 </Link>
               </li>
@@ -79,17 +79,17 @@ export function Footer() {
             <h4 className="font-display text-lg font-semibold mb-4">Company</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/about" className="text-background/70 hover:text-primary transition-colors">
+                <Link to="/about" className="text-muted-foreground hover:text-primary transition-colors">
                   About Us
                 </Link>
               </li>
               <li>
-                <Link to="/contact" className="text-background/70 hover:text-primary transition-colors">
+                <Link to="/contact" className="text-muted-foreground hover:text-primary transition-colors">
                   Contact
                 </Link>
               </li>
               <li>
-                <Link to="/faq" className="text-background/70 hover:text-primary transition-colors">
+                <Link to="/faq" className="text-muted-foreground hover:text-primary transition-colors">
                   FAQ
                 </Link>
               </li>
@@ -101,19 +101,19 @@ export function Footer() {
             <h4 className="font-display text-lg font-semibold mb-4">Legal</h4>
             <ul className="space-y-2">
               <li>
-                <Link to="/terms" className="text-background/70 hover:text-primary transition-colors">
+                <Link to="/terms" className="text-muted-foreground hover:text-primary transition-colors">
                   Terms of Service
                 </Link>
               </li>
               <li>
-                <Link to="/privacy" className="text-background/70 hover:text-primary transition-colors">
+                <Link to="/privacy" className="text-muted-foreground hover:text-primary transition-colors">
                   Privacy Policy
                 </Link>
               </li>
             </ul>
             <div className="mt-6">
               <h4 className="font-display text-lg font-semibold mb-2">Contact</h4>
-              <ul className="space-y-1 text-background/70 text-sm">
+              <ul className="space-y-1 text-muted-foreground text-sm">
                 <li>+94 77 123 4567</li>
                 <li>hello@exotics.lk</li>
               </ul>
@@ -121,7 +121,7 @@ export function Footer() {
           </div>
         </div>
 
-        <div className="border-t border-background/10 mt-12 pt-8 text-center text-background/50 text-sm">
+        <div className="border-t border-border/30 mt-12 pt-8 text-center text-muted-foreground text-sm">
           <p>© {new Date().getFullYear()} Exotics.lk. All rights reserved.</p>
         </div>
       </div>

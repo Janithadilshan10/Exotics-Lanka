@@ -19,7 +19,8 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Search, SlidersHorizontal, X, ArrowUpDown, BookmarkPlus } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger, SheetHeader, SheetTitle, SheetClose } from "@/components/ui/sheet";
+import { Search, SlidersHorizontal, X, ArrowUpDown, BookmarkPlus, Filter } from "lucide-react";
 
 interface Filters {
   searchQuery: string;
@@ -75,7 +76,7 @@ const Collection = () => {
     const transmissions = Array.from(new Set(featuredCars.map(car => car.transmission)));
     const locations = Array.from(new Set(featuredCars.map(car => car.location)));
     const conditions = ["New", "Used", "Certified Pre-Owned"];
-    
+
     return { fuelTypes, transmissions, locations, conditions };
   }, []);
 
@@ -486,183 +487,161 @@ const Collection = () => {
 
   return (
     <div className="min-h-screen">
-      <SEO 
+      <SEO
         title="Collection - Browse Luxury Cars"
         description="Browse our curated collection of exotic and luxury vehicles. Filter by brand, price, year, and more to find your perfect car."
         keywords="luxury car collection, exotic cars sri lanka, premium vehicles, buy luxury cars"
       />
       <Navbar />
       <PageTransition>
-        <main id="main-content" className="pt-20">
-        {/* Hero Section - Luxury Upgrade */}
-        <section className="relative h-[60vh] md:h-[70vh] overflow-hidden">
-          {/* Background Image/Video */}
-          <div className="absolute inset-0">
-            <img
-              src="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?w=1920&h=1080&fit=crop"
-              alt="Luxury Cars"
-              className="w-full h-full object-cover animate-ken-burns"
-            />
-            <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/50 to-transparent" />
-          </div>
-          
-          {/* Content */}
-          <div className="relative h-full flex items-center">
-            <div className="container mx-auto px-6 md:px-12 max-w-[1400px]">
-              <div className="max-w-2xl space-y-6">
-                <h1 className="font-display text-5xl md:text-7xl font-light text-white tracking-wide">
-                  The Collection
+        <main id="main-content">
+          {/* Premium Header with Search */}
+          <section className="relative pt-24 pb-16 overflow-hidden border-b border-border/30">
+            {/*Background Elements */}
+            <div className="absolute inset-0 bg-gradient-to-br from-muted/30 via-background to-muted/20" />
+            <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.015]" />
+
+            <div className="container mx-auto px-6 md:px-12 max-w-[1400px] relative z-10">
+              {/* Header */}
+              <div className="text-center mb-12">
+                <p className="text-primary font-medium uppercase tracking-widest text-sm mb-4">Premium Collection</p>
+                <h1 className="font-display text-4xl md:text-6xl font-light mb-4">
+                  Discover Your Dream <span className="font-medium text-primary">Vehicle</span>
                 </h1>
-                <p className="font-luxury text-xl md:text-2xl text-white/90 leading-relaxed">
-                  Curated excellence. Verified luxury. Your dream car awaits.
+                <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+                  Browse through {featuredCars.length}+ curated luxury and exotic vehicles
                 </p>
-                <div className="flex flex-wrap gap-3 mt-8">
-                  <Badge className="px-4 py-2 text-sm font-sans-luxury bg-primary/90 backdrop-blur-sm">
-                    {featuredCars.length}+ Premium Vehicles
-                  </Badge>
-                  <Badge className="px-4 py-2 text-sm font-sans-luxury bg-white/10 backdrop-blur-sm text-white border-white/20">
-                    100% Verified Sellers
-                  </Badge>
-                </div>
               </div>
-            </div>
-          </div>
-        </section>
 
-        {/* Main Content */}
-        <section className="py-12">
-          <div className="container mx-auto px-6 md:px-12 max-w-[1400px]">
-            <div className="flex gap-12">
-              {/* Desktop Filters Sidebar - Sticky */}
-              <aside className="hidden lg:block w-80 shrink-0">
-                <div className="sticky top-28">
-                  <div className="glass-card rounded-2xl p-8 space-y-8">
-                    <div className="flex items-center justify-between">
-                      <h2 className="font-sans-luxury text-xl font-light tracking-wide">Filters</h2>
-                      {activeFilterCount > 0 && (
-                        <Badge variant="secondary" className="font-sans-luxury">{activeFilterCount}</Badge>
-                      )}
-                    </div>
-                    
-                    {/* Quick Filters */}
-                    <div className="space-y-3">
-                      <h3 className="font-sans-luxury text-sm text-muted-foreground tracking-wide uppercase">Quick Filters</h3>
-                      <div className="flex flex-col gap-2">
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="justify-start font-sans-luxury tracking-wide hover:bg-primary/10 hover:text-primary hover:border-primary"
-                          onClick={() => {
-                            // Filter: New Arrivals (last 7 days)
-                            setSortBy("newest");
-                          }}
-                        >
-                          ✨ New Arrivals
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="justify-start font-sans-luxury tracking-wide hover:bg-primary/10 hover:text-primary hover:border-primary"
-                          onClick={() => {
-                            setFilters(f => ({ ...f, priceRange: [0, 10] }));
-                          }}
-                        >
-                          💎 Under LKR 10M
-                        </Button>
-                        <Button
-                          variant="outline"
-                          size="sm"
-                          className="justify-start font-sans-luxury tracking-wide hover:bg-primary/10 hover:text-primary hover:border-primary"
-                        >
-                          ✓ Verified Only
-                        </Button>
-                      </div>
-                    </div>
-                    
-                    <div className="h-px bg-border" />
-                    
-                    <FilterContent />
-                  </div>
-                </div>
-              </aside>
-
-              {/* Mobile Filter Button */}
-              <button
-                className="lg:hidden fixed bottom-6 right-6 z-40 p-4 rounded-full bg-primary text-primary-foreground shadow-xl hover:scale-110 transition-transform"
-                onClick={() => setShowFilters(true)}
-              >
-                <SlidersHorizontal className="h-6 w-6" />
-                {activeFilterCount > 0 && (
-                  <span className="absolute -top-2 -right-2 w-6 h-6 bg-destructive text-destructive-foreground rounded-full text-xs flex items-center justify-center font-bold">
-                    {activeFilterCount}
-                  </span>
-                )}
-              </button>
-
-              {/* Mobile Filter Drawer */}
-              {showFilters && (
-                <>
-                  <div
-                    className="lg:hidden fixed inset-0 z-50 bg-black/50 backdrop-blur-sm"
-                    onClick={() => setShowFilters(false)}
-                  />
-                  <div className="lg:hidden fixed inset-y-0 left-0 z-50 w-full sm:w-96 bg-background border-r border-border overflow-y-auto">
-                    <div className="sticky top-0 bg-background p-4 border-b border-border flex items-center justify-between z-10">
-                      <div className="flex items-center gap-3">
-                        <h2 className="font-display text-xl font-semibold">Filters</h2>
-                        {activeFilterCount > 0 && (
-                          <Badge variant="secondary">{activeFilterCount}</Badge>
+              {/* Premium Search Bar */}
+              <div className="max-w-3xl mx-auto mb-8">
+                <div className="relative">
+                  <div className="absolute -inset-px bg-gradient-to-r from-primary/20 via-primary/10 to-primary/20 rounded-2xl blur-sm opacity-50" />
+                  <div className="relative p-2 rounded-2xl bg-background/80 backdrop-blur-xl border border-border/50">
+                    <div className="flex gap-2">
+                      <div className="relative flex-1">
+                        <Search className="absolute left-4 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
+                        <input
+                          type="text"
+                          placeholder="Search by brand, model, or keyword..."
+                          value={filters.searchQuery}
+                          onChange={(e) => setFilters({ ...filters, searchQuery: e.target.value })}
+                          className="w-full h-14 pl-12 pr-4 bg-transparent border-0 focus:outline-none text-foreground placeholder:text-muted-foreground font-medium"
+                        />
+                        {filters.searchQuery && (
+                          <Button
+                            variant="ghost"
+                            size="icon"
+                            className="absolute right-2 top-1/2 -translate-y-1/2"
+                            onClick={() => setFilters({ ...filters, searchQuery: "" })}
+                          >
+                            <X className="h-4 w-4" />
+                          </Button>
                         )}
                       </div>
-                      <button
-                        onClick={() => setShowFilters(false)}
-                        className="p-2 hover:bg-muted rounded-full transition-colors"
-                      >
-                        <X className="h-5 w-5" />
-                      </button>
-                    </div>
-                    <div className="p-6">
-                      <FilterContent />
-                    </div>
-                    <div className="sticky bottom-0 left-0 right-0 p-4 border-t border-border bg-background">
                       <Button
-                        variant="gold"
-                        className="w-full"
-                        onClick={() => setShowFilters(false)}
+                        size="lg"
+                        className="h-14 px-8 bg-primary hover:bg-primary/90 shadow-lg"
                       >
-                        Show {filteredAndSortedCars.length} Results
+                        Search
                       </Button>
                     </div>
                   </div>
-                </>
-              )}
+                </div>
 
-              {/* Car Grid */}
-              <div className="flex-1 min-w-0">
-                {/* Active Filters & Sort */}
-                <div className="mb-6 space-y-4">
-                  {/* Results count & Sort */}
-                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-                    <p className="text-muted-foreground">
-                      Showing{" "}
-                      <span className="text-foreground font-semibold">
-                        {filteredAndSortedCars.length}
-                      </span>{" "}
-                      of {featuredCars.length} vehicles
-                    </p>
+                {/* Search Suggestions */}
+                {showSuggestions && searchSuggestions.length > 0 && (
+                  <div className="mt-2 p-4 rounded-xl bg-card border border-border/50 shadow-lg">
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground font-medium mb-3">Suggestions</p>
+                    <div className="space-y-1">
+                      {searchSuggestions.map((suggestion, idx) => (
+                        <button
+                          key={idx}
+                          className="w-full text-left px-3 py-2 rounded-lg hover:bg-primary/10 text-foreground transition-colors"
+                          onClick={() => {
+                            setFilters({ ...filters, searchQuery: suggestion });
+                            setShowSuggestions(false);
+                          }}
+                        >
+                          {suggestion}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </section>
+
+          {/* Main Content */}
+          <section className="py-12">
+            <div className="container mx-auto px-6 md:px-12 max-w-[1400px]">
+              <div className="flex flex-col gap-8">
+                {/* Header: Filters & Sort */}
+                <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 bg-card/50 backdrop-blur-sm p-4 rounded-2xl border border-border/50 sticky top-24 z-30 shadow-sm">
+                  <div className="flex items-center gap-3">
+                    <Sheet>
+                      <SheetTrigger asChild>
+                        <Button variant="outline" className="gap-2 bg-background border-primary/20 hover:border-primary/50 text-foreground">
+                          <Filter className="h-4 w-4" />
+                          Filters
+                          {activeFilterCount > 0 && (
+                            <Badge variant="secondary" className="ml-1 h-5 min-w-5 px-1 bg-primary/10 text-primary hover:bg-primary/20">
+                              {activeFilterCount}
+                            </Badge>
+                          )}
+                        </Button>
+                      </SheetTrigger>
+                      <SheetContent side="left" className="w-[300px] sm:w-[400px] overflow-y-auto">
+                        <SheetHeader className="mb-6">
+                          <SheetTitle className="font-display text-2xl">Filters</SheetTitle>
+                        </SheetHeader>
+                        <FilterContent />
+                        <div className="mt-8 pt-4 border-t border-border sticky bottom-0 bg-background pb-4">
+                          <SheetClose asChild>
+                            <Button className="w-full">
+                              Show {filteredAndSortedCars.length} Results
+                            </Button>
+                          </SheetClose>
+                        </div>
+                      </SheetContent>
+                    </Sheet>
+
+                    <Button
+                      variant="outline"
+                      className="gap-2 hidden md:flex bg-background border-primary/20 hover:border-primary/50 text-foreground"
+                      onClick={() => setIsSaveSearchOpen(true)}
+                    >
+                      <BookmarkPlus className="h-4 w-4" />
+                      Save Search
+                    </Button>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row sm:items-center gap-4">
+                    {/* Results Counter - Now visible on mobile */}
+                    <div className="flex items-center gap-2">
+                      <p className="text-sm text-muted-foreground">
+                        <span className="text-foreground font-semibold">{filteredAndSortedCars.length}</span> vehicles
+                        {activeFilterCount > 0 && <span className="text-primary ml-1">({activeFilterCount} filters)</span>}
+                      </p>
+
+                      {/* Clear All Filters Button */}
+                      {activeFilterCount > 0 && (
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          onClick={clearAllFilters}
+                          className="h-7 px-2 text-xs text-muted-foreground hover:text-destructive"
+                        >
+                          <X className="h-3 w-3 mr-1" />
+                          Clear All
+                        </Button>
+                      )}
+                    </div>
+
                     <div className="flex items-center gap-3">
-                      <Button
-                        variant="outline"
-                        size="sm"
-                        onClick={() => setIsSaveSearchOpen(true)}
-                        className="gap-2"
-                      >
-                        <BookmarkPlus className="h-4 w-4" />
-                        Save Search
-                      </Button>
-                      <ArrowUpDown className="h-4 w-4 text-muted-foreground" />
                       <Select value={sortBy} onValueChange={setSortBy}>
-                        <SelectTrigger className="w-[180px]">
+                        <SelectTrigger className="w-[180px] bg-background">
                           <SelectValue />
                         </SelectTrigger>
                         <SelectContent>
@@ -677,9 +656,12 @@ const Collection = () => {
                       </Select>
                     </div>
                   </div>
+                </div>
 
-                  {/* Active Filter Tags */}
-                  {activeFilterCount > 0 && (
+                {/* Active Filter Tags */}
+                {activeFilterCount > 0 && (
+                  <div className="space-y-3">
+                    <p className="text-xs uppercase tracking-wider text-muted-foreground font-medium">Active Filters</p>
                     <div className="flex flex-wrap gap-2">
                       {filters.searchQuery && (
                         <Badge
@@ -788,39 +770,40 @@ const Collection = () => {
                         </Button>
                       )}
                     </div>
+                  </div>
+                )}
+
+                {/* Car Grid - More columns for "smaller" efficiency */}
+                <div className="flex-1">
+                  {loading ? (
+                    // Loading skeletons
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                      {[1, 2, 3, 4, 5, 6, 7, 8].map(i => (
+                        <CarCardSkeleton key={i} />
+                      ))}
+                    </div>
+                  ) : filteredAndSortedCars.length > 0 ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                      {filteredAndSortedCars.map((car, index) => (
+                        <div
+                          key={car.id}
+                          className="animate-scale-in"
+                          style={{ animationDelay: `${index * 0.05}s` }}
+                        >
+                          <CarCard car={car} />
+                        </div>
+                      ))}
+                    </div>
+                  ) : (
+                    // Empty state with beautiful animation
+                    <NoSearchResults onClear={clearAllFilters} />
                   )}
                 </div>
-
-                {/* Car Grid - 2 Columns with Spacious Layout */}
-                {loading ? (
-                  // Loading skeletons
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-                    {[1, 2, 3, 4].map(i => (
-                      <CarCardSkeleton key={i} />
-                    ))}
-                  </div>
-                ) : filteredAndSortedCars.length > 0 ? (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-12">
-                    {filteredAndSortedCars.map((car, index) => (
-                      <div
-                        key={car.id}
-                        className="animate-scale-in"
-                        style={{ animationDelay: `${index * 0.08}s` }}
-                      >
-                        <CarCard car={car} />
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  // Empty state with beautiful animation
-                  <NoSearchResults onClear={clearAllFilters} />
-                )}
               </div>
             </div>
-          </div>
-        </section>
-      </main>
-      </PageTransition>
+          </section>
+        </main >
+      </PageTransition >
       <Footer />
 
       {/* Save Search Dialog */}
@@ -830,7 +813,7 @@ const Collection = () => {
         filters={filters}
         resultsCount={filteredAndSortedCars.length}
       />
-    </div>
+    </div >
   );
 };
 

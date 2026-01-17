@@ -366,7 +366,7 @@
     transform: scale(0.95);
   }
   
-  /* Premium card lift effect */
+  /* Premium card lift effect - Subtle */
   .card-lift {
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     will-change: transform, box-shadow;
@@ -374,16 +374,16 @@
   
   /* Dark mode hover */
   .dark .card-lift:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(212, 175, 55, 0.25), 
-                0 10px 30px rgba(0, 0, 0, 0.4);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.15), 
+                0 5px 15px rgba(0, 0, 0, 0.3);
   }
   
   /* Light mode hover */
   :root .card-lift:hover {
-    transform: translateY(-8px) scale(1.02);
-    box-shadow: 0 20px 60px rgba(212, 175, 55, 0.2), 
-                0 10px 30px rgba(0, 0, 0, 0.08);
+    transform: translateY(-4px);
+    box-shadow: 0 10px 30px rgba(212, 175, 55, 0.1), 
+                0 5px 15px rgba(0, 0, 0, 0.05);
   }
   
   /* Glassmorphism card - Dark mode */

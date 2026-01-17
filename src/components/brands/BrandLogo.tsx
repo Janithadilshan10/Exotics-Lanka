@@ -7,7 +7,7 @@ export function BrandLogo({ brand, className = "w-20 h-20" }: BrandLogoProps) {
   // Using multiple CDN sources with fallback chain
   const getLogoUrls = (brandName: string): string[] => {
     const iconNames: Record<string, string> = {
-      "Mercedes-Benz": "mercedesbenz",
+      "Mercedes-Benz": "mercedes",
       "BMW": "bmw",
       "Porsche": "porsche",
       "Land Rover": "landrover",
@@ -15,6 +15,14 @@ export function BrandLogo({ brand, className = "w-20 h-20" }: BrandLogoProps) {
       "Honda": "honda",
       "Lexus": "lexus",
       "Audi": "audi",
+      "Ferrari": "ferrari",
+      "Lamborghini": "lamborghini",
+      "Bentley": "bentley",
+      "Rolls-Royce": "rollsroyce",
+      "Maserati": "maserati",
+      "Aston Martin": "astonmartin",
+      "McLaren": "mclaren",
+      "Nissan": "nissan",
     };
 
     const iconName = iconNames[brandName];

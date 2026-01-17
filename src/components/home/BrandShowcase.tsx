@@ -8,40 +8,34 @@ export function BrandShowcase() {
       <div className="container mx-auto px-4">
         <div className="text-center mb-20">
           <h2 className="font-display text-4xl md:text-6xl font-light mb-6 tracking-tight">
-            Prestigious <span className="font-semibold text-gold-gradient">Marques</span>
+            Prestigious <span className="font-semibold text-primary">Marques</span>
           </h2>
           <p className="text-muted-foreground text-lg max-w-2xl mx-auto font-light tracking-wide">
             Explore our curated collection by the world's most coveted automotive brands
           </p>
         </div>
 
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+        {/* Premium Marquee / Grid */}
+        <div className="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-4 md:gap-6">
           {carBrands.map((brand, index) => (
             <Link
               key={brand.name}
               to={`/collection?brand=${brand.name}`}
-              className="group relative p-10 md:p-12 rounded-3xl border border-border/60 bg-card hover:border-primary/60 hover:shadow-2xl hover:shadow-primary/10 transition-all duration-700 luxury-card animate-fade-in hover:-translate-y-1"
+              className="group relative flex flex-col items-center justify-center p-8 rounded-2xl border border-border/40 bg-background/40 backdrop-blur-sm hover:border-primary/40 hover:bg-background/80 transition-all duration-500 hover:-translate-y-1 hover:shadow-[0_10px_30px_-10px_rgba(212,175,55,0.15)]"
               style={{ animationDelay: `${index * 0.05}s` }}
             >
-              <div className="flex flex-col items-center text-center">
-                {/* Premium Logo Container with Glow Effect */}
-                <div className="relative mb-6 opacity-80 group-hover:opacity-100 transition-all duration-700 group-hover:scale-110">
-                  {/* Glow effect behind logo */}
-                  <div className="absolute inset-0 bg-primary/20 blur-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-full scale-150" />
-                  <div className="relative">
-                    <BrandLogo brand={brand.name} className="w-24 h-24 md:w-28 md:h-28 object-contain filter brightness-110" />
-                  </div>
+              {/* Logo Container */}
+              <div className="relative w-16 h-16 md:w-20 md:h-20 mb-4 transition-transform duration-500 group-hover:scale-110">
+                <div className="absolute inset-0 bg-primary/20 blur-xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-full" />
+                <div className="relative z-10 w-full h-full flex items-center justify-center opacity-70 grayscale group-hover:opacity-100 group-hover:grayscale-0 transition-all duration-500">
+                  <BrandLogo brand={brand.name} className="w-full h-full object-contain" />
                 </div>
-                <h3 className="font-display text-xl md:text-2xl font-semibold mb-2 tracking-wide group-hover:text-primary transition-colors duration-300">
-                  {brand.name}
-                </h3>
-                <p className="text-base md:text-lg text-muted-foreground font-light">
-                  {brand.count} Vehicles
-                </p>
               </div>
-              
-              {/* Hover glow effect */}
-              <div className="absolute inset-0 rounded-2xl bg-primary/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
+
+              {/* Brand Name */}
+              <h3 className="font-display text-sm md:text-base font-medium tracking-wide text-foreground/80 group-hover:text-primary transition-colors duration-300">
+                {brand.name}
+              </h3>
             </Link>
           ))}
         </div>

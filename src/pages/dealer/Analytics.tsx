@@ -20,7 +20,7 @@ const Analytics = () => {
   );
 
   return (
-    <div className="p-4 md:p-6 space-y-6 max-w-[1600px] mx-auto">
+    <div className="p-4 md:p-6 space-y-8 max-w-[1600px] mx-auto">
       {/* AI Insight Bar */}
       <AIInsightBar />
 
@@ -58,9 +58,13 @@ const Analytics = () => {
 
       {/* Performance Metrics */}
       <section>
-        <h2 className="font-display text-lg font-semibold mb-4 text-muted-foreground">
-          Performance Metrics
-        </h2>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+          <h2 className="font-display text-xl font-light text-foreground">
+            Performance <span className="font-medium text-primary">Metrics</span>
+          </h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+        </div>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           <HealthScoreCard />
           <PriceCompetitivenessCard />
@@ -70,50 +74,54 @@ const Analytics = () => {
 
       {/* Conversion Funnel */}
       <section>
-        <h2 className="font-display text-lg font-semibold mb-4 text-muted-foreground">
-          Conversion Funnel Analysis
-        </h2>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+          <h2 className="font-display text-xl font-light text-foreground">
+            Conversion <span className="font-medium text-primary">Funnel</span>
+          </h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4">
           <div className="lg:col-span-2">
             <FunnelChart />
           </div>
-          <div className="glass-dark rounded-2xl p-6 flex flex-col justify-center">
-            <h3 className="text-sm text-muted-foreground mb-2">Funnel Efficiency</h3>
+          <div className="relative p-6 rounded-2xl bg-card/50 backdrop-blur-xl border border-border/50 shadow-lg flex flex-col justify-center hover:border-primary/30 transition-colors duration-300">
+            <h3 className="text-sm font-medium text-muted-foreground uppercase tracking-wider mb-4">Funnel Efficiency</h3>
             <div className="space-y-4">
               <div>
-                <div className="flex justify-between text-sm mb-1">
+                <div className="flex justify-between text-sm mb-2">
                   <span className="text-muted-foreground">View → Click</span>
-                  <span className="font-medium text-foreground">36%</span>
+                  <span className="font-semibold text-foreground">36%</span>
                 </div>
-                <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-blue-500 rounded-full" style={{ width: "36%" }} />
+                <div className="h-2 bg-muted/50 rounded-full overflow-hidden">
+                  <div className="h-full bg-blue-500 rounded-full transition-all duration-500" style={{ width: "36%" }} />
                 </div>
               </div>
               <div>
-                <div className="flex justify-between text-sm mb-1">
+                <div className="flex justify-between text-sm mb-2">
                   <span className="text-muted-foreground">Click → Favorite</span>
-                  <span className="font-medium text-foreground">18.7%</span>
+                  <span className="font-semibold text-foreground">18.7%</span>
                 </div>
-                <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-amber-500 rounded-full" style={{ width: "18.7%" }} />
+                <div className="h-2 bg-muted/50 rounded-full overflow-hidden">
+                  <div className="h-full bg-amber-500 rounded-full transition-all duration-500" style={{ width: "18.7%" }} />
                 </div>
               </div>
               <div>
-                <div className="flex justify-between text-sm mb-1">
+                <div className="flex justify-between text-sm mb-2">
                   <span className="text-muted-foreground">Favorite → Lead</span>
-                  <span className="font-medium text-foreground">14.8%</span>
+                  <span className="font-semibold text-foreground">14.8%</span>
                 </div>
-                <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-emerald-500 rounded-full" style={{ width: "14.8%" }} />
+                <div className="h-2 bg-muted/50 rounded-full overflow-hidden">
+                  <div className="h-full bg-emerald-500 rounded-full transition-all duration-500" style={{ width: "14.8%" }} />
                 </div>
               </div>
               <div>
-                <div className="flex justify-between text-sm mb-1">
+                <div className="flex justify-between text-sm mb-2">
                   <span className="text-muted-foreground">Lead → Sale</span>
-                  <span className="font-medium text-foreground">6.5%</span>
+                  <span className="font-semibold text-foreground">6.5%</span>
                 </div>
-                <div className="h-2 bg-muted rounded-full overflow-hidden">
-                  <div className="h-full bg-primary rounded-full" style={{ width: "6.5%" }} />
+                <div className="h-2 bg-muted/50 rounded-full overflow-hidden">
+                  <div className="h-full bg-primary rounded-full transition-all duration-500" style={{ width: "6.5%" }} />
                 </div>
               </div>
             </div>
@@ -123,9 +131,13 @@ const Analytics = () => {
 
       {/* Market Intelligence */}
       <section>
-        <h2 className="font-display text-lg font-semibold mb-4 text-muted-foreground">
-          Market Intelligence
-        </h2>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+          <h2 className="font-display text-xl font-light text-foreground">
+            Market <span className="font-medium text-primary">Intelligence</span>
+          </h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <LocationHeatmap />
           <TrendingModels />
@@ -134,9 +146,13 @@ const Analytics = () => {
 
       {/* Financial Trends */}
       <section>
-        <h2 className="font-display text-lg font-semibold mb-4 text-muted-foreground">
-          Financial Trends
-        </h2>
+        <div className="flex items-center gap-3 mb-6">
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+          <h2 className="font-display text-xl font-light text-foreground">
+            Financial <span className="font-medium text-primary">Trends</span>
+          </h2>
+          <div className="h-px flex-1 bg-gradient-to-r from-transparent via-border to-transparent" />
+        </div>
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
           <DepreciationChart />
           <SentimentChart />

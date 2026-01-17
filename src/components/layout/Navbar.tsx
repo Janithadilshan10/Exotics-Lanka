@@ -9,8 +9,8 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Search, Menu, X, User, Heart, Settings, LogOut, LayoutDashboard, MessageCircle, Bookmark } from "lucide-react";
-import { useState } from "react";
+import { Search, Menu, X, User, Heart, Settings, LogOut, LayoutDashboard, MessageCircle, Bookmark, Gavel } from "lucide-react";
+import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { useAuth } from "@/contexts/AuthContext";
@@ -20,11 +20,20 @@ import { Badge } from "@/components/ui/badge";
 
 export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
   const location = useLocation();
   const { user, isAuthenticated, logout } = useAuth();
   const { unreadCount } = useMessaging();
   const { getTotalNewMatches } = useSavedSearches();
   const newMatchesCount = getTotalNewMatches();
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
 
   const navLinks = [
     { href: "/", label: "Home" },
@@ -32,14 +41,26 @@ export function Navbar() {
     { href: "/sell", label: "Sell" },
   ];
 
+  const isHome = location.pathname === "/";
+
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-gradient-to-b from-black/10 via-black/5 to-transparent backdrop-blur-sm">
+    <nav
+      className={cn(
+        "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
+        isScrolled || !isHome
+          ? "border-b border-border/40 bg-background/80 backdrop-blur-md supports-[backdrop-filter]:bg-background/60 shadow-sm"
+          : "border-transparent bg-transparent"
+      )}
+    >
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center gap-2">
-            <span className="font-display text-2xl font-bold tracking-tight">
-              Exotics<span className="text-primary">.lk</span>
+          <Link to="/" className="flex items-center gap-2 group">
+            <span className={cn(
+              "font-display text-2xl font-bold tracking-tight transition-colors duration-300",
+              isScrolled || !isHome ? "text-foreground" : "dark:text-white text-zinc-900"
+            )}>
+              Exotics<span className="text-primary group-hover:text-primary/80 transition-colors duration-300">.lk</span>
             </span>
           </Link>
 
@@ -53,7 +74,9 @@ export function Navbar() {
                   "text-sm font-medium transition-colors hover:text-primary",
                   location.pathname === link.href
                     ? "text-primary"
-                    : "text-muted-foreground"
+                    : isScrolled || !isHome
+                      ? "text-muted-foreground"
+                      : "dark:text-white/80 dark:hover:text-white text-zinc-900 hover:text-primary"
                 )}
               >
                 {link.label}
@@ -63,11 +86,11 @@ export function Navbar() {
 
           {/* Actions */}
           <div className="hidden md:flex items-center gap-3">
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" className={isScrolled || !isHome ? "text-foreground hover:bg-muted" : "text-white/80 hover:text-white hover:bg-white/10"}>
               <Search className="h-5 w-5" />
             </Button>
             <ThemeToggle />
-            
+
             {isAuthenticated ? (
               <>
                 {/* User Menu */}
@@ -134,6 +157,12 @@ export function Navbar() {
                         </div>
                       </Link>
                     </DropdownMenuItem>
+                    <DropdownMenuItem asChild>
+                      <Link to="/resolution-center" className="cursor-pointer">
+                        <Gavel className="mr-2 h-4 w-4" />
+                        Resolution Center
+                      </Link>
+                    </DropdownMenuItem>
                     {user?.role !== "buyer" && (
                       <DropdownMenuItem asChild>
                         <Link to="/dealer" className="cursor-pointer">
@@ -169,12 +198,16 @@ export function Navbar() {
           </div>
 
           {/* Mobile Menu Button */}
-          <button
-            className="md:hidden p-2"
-            onClick={() => setIsOpen(!isOpen)}
-          >
-            {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
-          </button>
+          <div className="md:hidden flex items-center">
+            <Button
+              variant="ghost"
+              size="icon"
+              onClick={() => setIsOpen(!isOpen)}
+              className={isScrolled || !isHome ? "text-foreground" : "text-white hover:bg-white/10"}
+            >
+              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </Button>
+          </div>
         </div>
 
         {/* Mobile Navigation */}
@@ -201,7 +234,7 @@ export function Navbar() {
                   <ThemeToggle />
                   <span className="text-sm text-muted-foreground">Theme</span>
                 </div>
-                
+
                 {isAuthenticated ? (
                   <>
                     <div className="flex items-center gap-3 p-3 rounded-lg bg-muted/50">
@@ -250,6 +283,12 @@ export function Navbar() {
                         )}
                       </Button>
                     </Link>
+                    <Link to="/resolution-center" onClick={() => setIsOpen(false)}>
+                      <Button variant="outline" className="w-full justify-start gap-2">
+                        <Gavel className="h-4 w-4" />
+                        Resolution Center
+                      </Button>
+                    </Link>
                     {user?.role !== "buyer" && (
                       <Link to="/dealer" onClick={() => setIsOpen(false)}>
                         <Button variant="gold" className="w-full justify-start gap-2">
@@ -258,8 +297,8 @@ export function Navbar() {
                         </Button>
                       </Link>
                     )}
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="w-full justify-start gap-2 text-destructive"
                       onClick={() => {
                         logout();

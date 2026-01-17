@@ -7,17 +7,9 @@ import {
   DialogTitle,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import {
-  Facebook,
-  Twitter,
-  Linkedin,
-  Mail,
-  Link as LinkIcon,
-  MessageCircle,
-  Check,
-} from "lucide-react";
+import { Check } from "lucide-react";
 import { toast } from "sonner";
+import { cn } from "@/lib/utils";
 
 interface ShareDialogProps {
   isOpen: boolean;
@@ -25,6 +17,7 @@ interface ShareDialogProps {
   title: string;
   url: string;
   description?: string;
+  price?: string;
 }
 
 export function ShareDialog({
@@ -33,12 +26,16 @@ export function ShareDialog({
   title,
   url,
   description = "Check out this amazing vehicle on Exotics.lk",
+  price,
 }: ShareDialogProps) {
   const [copied, setCopied] = useState(false);
 
+  const shareUrl = `${window.location.origin}${url}`;
+  const shareText = `${title}${price ? ` - ${price}` : ''} | Exotics Lanka`;
+
   const handleCopyLink = async () => {
     try {
-      await navigator.clipboard.writeText(url);
+      await navigator.clipboard.writeText(shareUrl);
       setCopied(true);
       toast.success("Link copied to clipboard!");
       setTimeout(() => setCopied(false), 2000);
@@ -49,12 +46,23 @@ export function ShareDialog({
 
   const shareOptions = [
     {
-      name: "Facebook",
-      icon: Facebook,
-      color: "bg-[#1877F2] hover:bg-[#1877F2]/90",
+      name: "WhatsApp",
+      emoji: "💬",
+      color: "hover:bg-green-500/10 hover:text-green-600 dark:hover:text-green-400 hover:border-green-500/30",
       action: () => {
         window.open(
-          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
+          `https://wa.me/?text=${encodeURIComponent(`${shareText}\n\n${description}\n\n${shareUrl}`)}`,
+          "_blank"
+        );
+      },
+    },
+    {
+      name: "Facebook",
+      emoji: "📘",
+      color: "hover:bg-blue-500/10 hover:text-blue-600 dark:hover:text-blue-400 hover:border-blue-500/30",
+      action: () => {
+        window.open(
+          `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl)}`,
           "_blank",
           "width=600,height=400"
         );
@@ -62,45 +70,22 @@ export function ShareDialog({
     },
     {
       name: "Twitter",
-      icon: Twitter,
-      color: "bg-[#1DA1F2] hover:bg-[#1DA1F2]/90",
+      emoji: "𝕏",
+      color: "hover:bg-zinc-500/10 hover:text-zinc-900 dark:hover:text-zinc-100 hover:border-zinc-500/30",
       action: () => {
         window.open(
-          `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}&text=${encodeURIComponent(title)}`,
+          `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}&url=${encodeURIComponent(shareUrl)}`,
           "_blank",
           "width=600,height=400"
-        );
-      },
-    },
-    {
-      name: "LinkedIn",
-      icon: Linkedin,
-      color: "bg-[#0A66C2] hover:bg-[#0A66C2]/90",
-      action: () => {
-        window.open(
-          `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
-          "_blank",
-          "width=600,height=400"
-        );
-      },
-    },
-    {
-      name: "WhatsApp",
-      icon: MessageCircle,
-      color: "bg-[#25D366] hover:bg-[#25D366]/90",
-      action: () => {
-        window.open(
-          `https://wa.me/?text=${encodeURIComponent(`${title} - ${url}`)}`,
-          "_blank"
         );
       },
     },
     {
       name: "Email",
-      icon: Mail,
-      color: "bg-gray-600 hover:bg-gray-700",
+      emoji: "✉️",
+      color: "hover:bg-primary/10 hover:text-primary hover:border-primary/30",
       action: () => {
-        window.location.href = `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(`${description}\n\n${url}`)}`;
+        window.location.href = `mailto:?subject=${encodeURIComponent(shareText)}&body=${encodeURIComponent(`${description}\n\nView listing: ${shareUrl}`)}`;
       },
     },
   ];
@@ -109,50 +94,60 @@ export function ShareDialog({
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle>Share this listing</DialogTitle>
-          <DialogDescription>
-            Share this vehicle with your friends and family
+          <DialogTitle className="font-display text-2xl">Share this listing</DialogTitle>
+          <DialogDescription className="text-muted-foreground">
+            Share {title} with friends and family
           </DialogDescription>
         </DialogHeader>
 
-        {/* Copy Link Section */}
-        <div className="space-y-4">
-          <div className="flex items-center gap-2">
-            <Input
-              value={url}
-              readOnly
-              className="flex-1"
-              onClick={(e) => e.currentTarget.select()}
-            />
-            <Button
-              variant={copied ? "default" : "outline"}
-              size="icon"
-              onClick={handleCopyLink}
-              className="flex-shrink-0"
-            >
-              {copied ? (
-                <Check className="h-4 w-4" />
-              ) : (
-                <LinkIcon className="h-4 w-4" />
-              )}
-            </Button>
+        <div className="space-y-6 pt-2">
+          {/* Social Share Options - Premium Grid */}
+          <div className="grid grid-cols-2 gap-3">
+            {shareOptions.map((option) => (
+              <Button
+                key={option.name}
+                variant="outline"
+                className={cn(
+                  "h-auto flex-col gap-3 py-5 transition-all duration-300 border-border/50",
+                  option.color
+                )}
+                onClick={() => {
+                  option.action();
+                  toast.success(`Sharing via ${option.name}`);
+                }}
+              >
+                <span className="text-4xl" role="img" aria-label={option.name}>
+                  {option.emoji}
+                </span>
+                <span className="text-sm font-medium">{option.name}</span>
+              </Button>
+            ))}
           </div>
 
-          {/* Social Share Buttons */}
-          <div className="space-y-3">
-            <p className="text-sm text-muted-foreground">Share via</p>
-            <div className="grid grid-cols-5 gap-2">
-              {shareOptions.map((option) => (
-                <button
-                  key={option.name}
-                  onClick={option.action}
-                  className={`flex flex-col items-center gap-2 p-3 rounded-lg ${option.color} text-white transition-all hover:scale-105`}
-                  title={option.name}
-                >
-                  <option.icon className="h-5 w-5" />
-                  <span className="text-xs font-medium">{option.name}</span>
-                </button>
-              ))}
+          {/* Copy Link Section - Refined */}
+          <div className="space-y-3 pt-2 border-t border-border/50">
+            <label className="text-xs uppercase tracking-wider text-muted-foreground font-medium">
+              Or copy link
+            </label>
+            <div className="flex gap-2">
+              <div className="flex-1 px-4 py-2.5 bg-muted/50 rounded-lg text-sm truncate font-mono text-muted-foreground border border-border/50">
+                {shareUrl}
+              </div>
+              <Button
+                size="sm"
+                onClick={handleCopyLink}
+                className="shrink-0 min-w-[80px]"
+                variant={copied ? "default" : "outline"}
+              >
+                {copied ? (
+                  <>
+                    <Check className="h-4 w-4 mr-1.5" />
+                    Copied!
+                  </>
+                ) : (
+                  "Copy"
+                )}
+              </Button>
             </div>
           </div>
         </div>
